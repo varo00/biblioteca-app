@@ -10,4 +10,20 @@ export class AuthService {
     private auth : Auth
   ) { }
 
+  async login({email, password}){
+    return await signInWithEmailAndPassword(this.auth, email, password);
+  }
+  
+  async registro({email, password}):Promise<any> | null{
+    return await createUserWithEmailAndPassword(this.auth, email, password);
+  }
+
+  logout(){
+    return signOut(this.auth);
+  }
+
+  get currentUser(){
+    return this.auth.currentUser;
+  }
+
 }
