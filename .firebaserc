@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "biblioteca-app-51582": {
+      "hosting": {
+        "app": [
+          "biblioteca-app-51582"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "biblioteca-app-51582"
+  }
+}
