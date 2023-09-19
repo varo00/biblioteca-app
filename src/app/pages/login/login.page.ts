@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { error } from 'console';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -31,22 +32,25 @@ export class LoginPage implements OnInit {
 
   async login() {
     this.auhService.login(this.loginForm.value).then(res => {
-      this.router.navigate(['home']);
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Correcto',
+        heightAuto: false,
+        allowOutsideClick: false,
+      }).then(() => {
+        this.router.navigate(['home']);
+      });
+
     }).catch(error => {
-      this.showAlert("Login incorrecto", "Por favor, inténtelo de nuevo");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Email o contraseña incorrectos!!!',
+        heightAuto: false,
+        allowOutsideClick: false,
+      });
     });
-
-  }
-
-  async showAlert(header, message) {
-    const alert = await this.alertCtrl.create({
-      header,
-      message,
-      buttons: ['OK'],
-      mode: 'ios'
-    });
-
-    await alert.present();
   }
 
   verPwd(event) {
