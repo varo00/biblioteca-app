@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { error } from 'console';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
@@ -19,8 +17,6 @@ export class LoginPage implements OnInit {
     private auhService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {

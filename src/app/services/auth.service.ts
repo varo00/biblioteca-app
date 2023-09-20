@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, deleteUser } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class AuthService {
     return await signInWithEmailAndPassword(this.auth, email, password);
   }
   
-  async registro({email, password}):Promise<any> | null{
+  async registro(email, password){
     return await createUserWithEmailAndPassword(this.auth, email, password);
   }
 
