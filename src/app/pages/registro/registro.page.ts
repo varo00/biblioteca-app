@@ -33,7 +33,7 @@ export class RegistroPage implements OnInit {
 
   async onSubmit() {
     
-    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(res => {
+    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(() => {
       this.userService.crearUsuario(this.signUpForm.value).then(() => {
         Swal.fire({
           icon: 'success',
@@ -43,7 +43,7 @@ export class RegistroPage implements OnInit {
           this.router.navigate(['/']);
         })
       });
-    }).catch(err => {
+    }).catch(() => {
       Swal.fire({
         icon: 'error',
         title: 'El email ya existe, prueba otro',
@@ -63,7 +63,6 @@ export class RegistroPage implements OnInit {
       pwdHTML.setAttribute('type', 'password');
       event.target.name = 'eye';
     }
-
   }
 
 }
