@@ -15,26 +15,27 @@
   </ion-header>
 
   <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-    <ion-item class="ion-margin">
-      <ion-label position="floating">Nombre <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="nombre" type="text"></ion-input>
-    </ion-item>
-    <ion-note color='danger' color='danger' class="ion-margin-start" *ngIf="((this.signUpForm.get('nombre').dirty || this.signUpForm.get('nombre').touched) && this.signUpForm.get('nombre').errors)">El campo nombre es obligatorio</ion-note>
 
     <ion-item class="ion-margin">
-      <ion-label position="floating">Apellidos <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="apellidos" type="text"></ion-input>
-    </ion-item>
-    <ion-note color='danger' class="ion-margin-start" *ngIf="((this.signUpForm.get('apellidos').dirty || this.signUpForm.get('apellidos').touched) && this.signUpForm.get('apellidos').errors)">El campo apellidos es obligatorio</ion-note>
-
-    <ion-item class="ion-margin">
-      <ion-label position="floating">Email <ion-text color="danger">*</ion-text></ion-label>
+      <ion-label position="floating">Correo Electrónico<ion-text color="danger">*</ion-text></ion-label>
       <ion-input required formControlName="email" type="email"></ion-input>
     </ion-item>
     <ion-note color='danger' class="ion-margin-start" *ngIf="((this.signUpForm.get('email').dirty || this.signUpForm.get('email').touched) && this.signUpForm.get('email').errors)">Email inválido</ion-note>
 
     <ion-item class="ion-margin">
-      <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
+      <ion-label position="floating">Nombre<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="nombre" type="text"></ion-input>
+    </ion-item>
+    <ion-note color='danger' color='danger' class="ion-margin-start" *ngIf="((this.signUpForm.get('nombre').dirty || this.signUpForm.get('nombre').touched) && this.signUpForm.get('nombre').errors)">El campo nombre es obligatorio</ion-note>
+
+    <ion-item class="ion-margin">
+      <ion-label position="floating">Apellidos<ion-text color="danger">*</ion-text></ion-label>
+      <ion-input required formControlName="apellidos" type="text"></ion-input>
+    </ion-item>
+    <ion-note color='danger' class="ion-margin-start" *ngIf="((this.signUpForm.get('apellidos').dirty || this.signUpForm.get('apellidos').touched) && this.signUpForm.get('apellidos').errors)">El campo apellidos es obligatorio</ion-note>
+
+    <ion-item class="ion-margin">
+      <ion-label position="floating">Contraseña<ion-text color="danger">*</ion-text></ion-label>
       <ion-input required formControlName="password" type="password" id="pwd"></ion-input>
       <ion-icon slot="end" name="eye" class="ion-margin-top" (click)="verPwd($event)"></ion-icon>
     </ion-item>
