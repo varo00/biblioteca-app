@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 
@@ -17,6 +18,7 @@ export class LoginPage implements OnInit {
     private auhService: AuthService,
     private router: Router,
     private fb: FormBuilder,
+    private menuCtrl : MenuController,
   ) { }
 
   ngOnInit() {
@@ -24,6 +26,8 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+    this.menuCtrl.enable(false, 'first');
   }
 
   async login() {

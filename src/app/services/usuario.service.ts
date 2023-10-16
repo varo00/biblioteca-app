@@ -28,7 +28,7 @@ export class UsuarioService {
 
   }
 
-  update(id){
+  update(user){
 
   }
 }
