@@ -78,4 +78,10 @@ export class HomePage implements OnInit {
     modal.present();
   }
 
+  // handleRefresh(event) {
+  //   setTimeout(() => {
+  //     event.target.complete();
+  //   }, 1500);
+  // }
+
 }
