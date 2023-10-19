@@ -39,8 +39,8 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.libroService.getLibros().subscribe((res) => {
-      this.libros = res;
+    this.libroService.getLibros().subscribe( res => {
+      this.libros = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
     });
   }
 
@@ -52,6 +52,7 @@ export class HomePage implements OnInit {
       confirmButtonText: 'Sí',
       cancelButtonText: 'Cancelar',
       heightAuto: false,
+      backdrop: false,
     }).then((result) => {
 
       if (result.isConfirmed) {
@@ -76,6 +77,10 @@ export class HomePage implements OnInit {
     });
 
     modal.present();
+  }
+
+  anadirNota(){
+
   }
 
 }

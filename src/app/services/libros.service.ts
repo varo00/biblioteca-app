@@ -14,15 +14,7 @@ export class LibrosService {
 
   getLibros() : Observable<Libro[]>{
     const librosRef = collection(this.firestore, 'libros');
-    return collectionData(librosRef, {idField: 'id'}) as Observable<Libro[]>;
-  }
-
-  getLibroPorUsuario(email){
-
-  }
-
-  getLibroById(id){
-    
+    return collectionData(librosRef, {idField: 'doc'}) as Observable<Libro[]>;
   }
 
   deleteLibro(){
