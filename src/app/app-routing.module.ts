@@ -23,13 +23,14 @@ const routes: Routes = [
     ...canActivate(redirectLoggedInToHome),
   },
   {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule),
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
-  },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
 ];
 

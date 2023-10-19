@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { error } from 'console';
 import { MenuController } from '@ionic/angular';
 
 @Component({
@@ -37,21 +36,23 @@ export class RegistroPage implements OnInit {
 
   async onSubmit() {
     
-    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(() => {
+    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(res => {
       let userReg = {
         nombre : this.signUpForm.get('nombre').value,
         apellidos : this.signUpForm.get('apellidos').value,
         email : this.signUpForm.get('email').value,
+        id : res.user.uid,
       }
-      this.userService.crearUsuario(userReg).then(() => {
+      this.userService.crearUsuario(userReg, res.user.uid).then(() => {
         Swal.fire({
           icon: 'success',
           title: 'Registro exitoso',
           heightAuto: false,
         }).then(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         })
       });
+
     }).catch(() => {
       Swal.fire({
         icon: 'error',

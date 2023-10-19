@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
         heightAuto: false,
         allowOutsideClick: false,
       }).then(() => {
-        this.router.navigate(['home']);
+        this.router.navigate(['/home']);
       });
 
     }).catch(error => {
