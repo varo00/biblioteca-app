@@ -23,7 +23,7 @@ export class UsuarioService {
   }
 
   deleteById(id){
-
+    
   }
 
   updateUsuario(user:Usuario){

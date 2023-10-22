@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Detalles</ion-title>
+
+    <ion-icon (click)="habilitarEdicion()" slot="end" class="ion-margin-end" name="pencil" size="large"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="libro">
+    <ion-item class="ion-margin-vertical">
+      <ion-label position="fixed">Titulo</ion-label>
+      <ion-input [(ngModel)]="libro.titulo" disabled></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical">
+      <ion-label position="fixed">Autor</ion-label>
+      <ion-input [(ngModel)]="libro.autor" disabled></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical">
+      <ion-label position="fixed">Comentario</ion-label>
+      <ion-input type="text" [(ngModel)]="libro.comentario" disabled></ion-input>
+    </ion-item>
+
+    <ion-buttons slot="start" class="ion-padding">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button (click)="actualizarLibro()" expand="block" color="success" shape="rounded">
+              <ion-icon slot="start" name="save-outline"></ion-icon>
+              Actualizar
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button (click)="borrarLibro()" expand="block" color="danger" shape="rounded">
+              <ion-icon slot="start" name="trash-bin-outline"></ion-icon>
+              Eliminar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+
+
+  </div>
+
+</ion-content>

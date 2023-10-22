@@ -9,14 +9,11 @@
     <ion-button slot="end" (click)="logout()" fill="clear">
       <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
     </ion-button>
-    
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-
-  <ion-content class="ion-padding">
-
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Tu Biblioteca</ion-title>
@@ -38,7 +35,7 @@
 
 
   <ion-fab vertical="bottom" horizontal="end" class="ion-margin">
-    <ion-fab-button (click)="anadirNota()">
+    <ion-fab-button [routerLink]="['/anadir-libro']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

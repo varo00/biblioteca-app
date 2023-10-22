@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, docData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, deleteDoc, doc, docData, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/libro';
 
@@ -17,11 +17,25 @@ export class LibrosService {
     return collectionData(librosRef, {idField: 'doc'}) as Observable<Libro[]>;
   }
 
-  deleteLibro(){
-
+  getLibroById(id: string) : Observable<Libro> {
+    const libroDocRef = doc(this.firestore, `libros/${id}`);
+    return docData(libroDocRef, {idField: 'doc'}) as Observable<Libro>;
   }
 
-  updateLibro(libro){
-
+  deleteLibro(libro : Libro){
+    const libroDocRef = doc(this.firestore, `libros/${libro.doc}`);
+    return deleteDoc(libroDocRef);
   }
+
+  updateLibro(libro : Libro){
+    const libroDocRef = doc(this.firestore, `libros/${libro.doc}`);
+    return updateDoc(libroDocRef, {
+      titulo: libro.titulo, 
+      autor:libro.autor, 
+      comentario: libro.comentario, 
+      leido: libro.leido
+    });
+  }
+
+
 }
