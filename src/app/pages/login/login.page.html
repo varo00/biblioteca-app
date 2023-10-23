@@ -29,10 +29,15 @@
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="((this.loginForm.get('password').dirty || this.loginForm.get('password').touched) && this.loginForm.get('password').errors)">La contraseña debe tener al menos 6 caracteres</ion-note>
 
+    <div id="pwd-olvidada">
+      <a class="ion-margin" [routerLink]="['/recuperar-pwd']">¿Contraseña olvidada?</a>
+    </div>
+
     <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid" class="ion-margin">
-      login
+      iniciar sesión
     </ion-button>
   </form>
+
 
   <div>
     <p class="ion-margin-start">¿No tienes cuenta? <a [routerLink]="['/registro']">Regístrate ahora</a></p>

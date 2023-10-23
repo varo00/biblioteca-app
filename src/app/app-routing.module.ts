@@ -38,6 +38,10 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin),
   },
   {
+    path: 'recuperar-pwd',
+    loadChildren: () => import('./pages/recuperar-pwd/recuperar-pwd.module').then( m => m.RecuperarPwdPageModule)
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

@@ -41,6 +41,11 @@ export class HomePage implements OnInit {
     });
   }
 
+  /*
+      Al entrar aqui desde una pagina donde el menu está deshabilitado
+      tengo que volverlo a activar porque si no lo hago no aparece el icono
+      hasta que la página se recargue
+  */
   ionViewWillEnter(){
     this.menuCtrl.enable(true, 'first');
   }

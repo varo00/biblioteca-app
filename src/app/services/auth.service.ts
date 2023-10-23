@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, deleteUser } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,10 @@ export class AuthService {
 
   logout(){
     return signOut(this.auth);
+  }
+
+  async restablecerContrasena(email:string){
+    return await sendPasswordResetEmail(this.auth, email);
   }
 
   get currentUser(){
