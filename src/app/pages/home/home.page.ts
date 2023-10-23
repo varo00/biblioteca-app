@@ -5,7 +5,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
-import {  ModalController } from '@ionic/angular';
+import {  MenuController, ModalController } from '@ionic/angular';
 import { Usuario } from '../../interfaces/usuario';
 import { LibroModalPage } from '../libro-modal/libro-modal.page';
 
@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
     private libroService: LibrosService,
     private usuarioService: UsuarioService,
     private modalCtrl: ModalController,
+    private menuCtrl : MenuController
   ) {
 
     this.usuarioService.getUsusarios().subscribe(usuarios => {
@@ -38,6 +39,10 @@ export class HomePage implements OnInit {
     this.libroService.getLibros().subscribe( res => {
       this.libros = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
     });
+  }
+
+  ionViewWillEnter(){
+    this.menuCtrl.enable(true, 'first');
   }
 
   async logout() {
