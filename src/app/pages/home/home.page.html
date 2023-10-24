@@ -20,11 +20,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div *ngIf="libros.length === 0" class="ion-margin-vertical">
-    <ion-title>Aún no tienes libros en tu biblioteca</ion-title>
-  </div>
-
-  <div *ngIf="libros.length !== 0">
+  <div *ngIf="libros.length !== 0; else elseBlock">
     <ion-card *ngFor="let libro of libros" (click)="abrirLibro(libro)">
       <ion-card-header>
         <ion-card-title>{{libro.titulo}}</ion-card-title>
@@ -32,6 +28,10 @@
       </ion-card-header>
     </ion-card>
   </div>
+  
+  <ng-template #elseBlock class="ion-margin-vertical">
+    <ion-title>Aún no tienes libros en tu biblioteca</ion-title>
+  </ng-template>
 
 
   <ion-fab vertical="bottom" horizontal="end" class="ion-margin">

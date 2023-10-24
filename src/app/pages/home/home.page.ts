@@ -5,7 +5,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
-import {  MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { Usuario } from '../../interfaces/usuario';
 import { LibroModalPage } from '../libro-modal/libro-modal.page';
 
@@ -25,19 +25,27 @@ export class HomePage implements OnInit {
     private libroService: LibrosService,
     private usuarioService: UsuarioService,
     private modalCtrl: ModalController,
-    private menuCtrl : MenuController
+    private menuCtrl: MenuController
   ) {
-
     this.usuarioService.getUsusarios().subscribe(usuarios => {
-        this.userLoggeado = usuarios.filter(u => u['id'] === this.authService.currentUser.uid)[0];
-        console.log(this.userLoggeado);
+      this.userLoggeado = usuarios.filter(u => u['id'] === this.authService.currentUser.uid)[0];
+      console.log(this.userLoggeado);
     });
 
   }
 
   ngOnInit(): void {
-    this.libroService.getLibros().subscribe( res => {
+    this.libroService.getLibros().subscribe(res => {
       this.libros = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
+      this.ordenarLibrosAlfabeticamente();
+    });
+  }
+
+  ordenarLibrosAlfabeticamente() {
+    this.libros = this.libros.sort((a, b) => {
+      const tituloA = a.titulo.toLowerCase();
+      const tituloB = b.titulo.toLowerCase();
+      return tituloA.localeCompare(tituloB);
     });
   }
 
@@ -46,7 +54,7 @@ export class HomePage implements OnInit {
       tengo que volverlo a activar porque si no lo hago no aparece el icono
       hasta que la página se recargue
   */
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.menuCtrl.enable(true, 'first');
   }
 

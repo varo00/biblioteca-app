@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { LibrosService } from 'src/app/services/libros.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-libro',
@@ -15,6 +18,8 @@ export class AnadirLibroPage implements OnInit {
     private menuCtrl : MenuController,
     private fb : FormBuilder,
     private authService : AuthService,
+    private libroService : LibrosService,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -32,6 +37,24 @@ export class AnadirLibroPage implements OnInit {
 
   onSubmit(){
     console.log(this.addBookForm.value);
+    this.libroService.anadirLibro(this.addBookForm.value).then(() => {
+      const exitoToast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+      exitoToast.fire({
+        icon: 'success',
+        title: '¡Nuevo libro en tu biblioteca!',
+      });
+
+      this.router.navigate(['/home']);
+    }).catch(() => {
+      console.log('error al añadir un libro');
+    })
   }
 
 }
