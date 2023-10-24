@@ -14,13 +14,14 @@ import { MenuController } from '@ionic/angular';
 export class RegistroPage implements OnInit {
 
   signUpForm: FormGroup
+  verContrasena = false;
 
   constructor(
     private authService: AuthService,
     private userService: UsuarioService,
     private router: Router,
     private fb: FormBuilder,
-    private menuCtrl : MenuController,
+    private menuCtrl: MenuController,
   ) { }
 
   ngOnInit() {
@@ -35,13 +36,13 @@ export class RegistroPage implements OnInit {
   }
 
   async onSubmit() {
-    
+
     this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(res => {
       let userReg = {
-        nombre : this.signUpForm.get('nombre').value,
-        apellidos : this.signUpForm.get('apellidos').value,
-        email : this.signUpForm.get('email').value,
-        id : res.user.uid,
+        nombre: this.signUpForm.get('nombre').value,
+        apellidos: this.signUpForm.get('apellidos').value,
+        email: this.signUpForm.get('email').value,
+        id: res.user.uid,
       }
       this.userService.crearUsuario(userReg, res.user.uid).then(() => {
         Swal.fire({
@@ -63,16 +64,7 @@ export class RegistroPage implements OnInit {
 
   }
 
-  verPwd(event) {
-    const pwdHTML = document.getElementById('pwd');
-
-    if (pwdHTML.getAttribute('type') === 'password') {
-      pwdHTML.setAttribute('type', 'text');
-      event.target.name = 'eye-off';
-    } else {
-      pwdHTML.setAttribute('type', 'password');
-      event.target.name = 'eye';
-    }
+  verPwd() {
+    this.verContrasena = !this.verContrasena;
   }
-
 }

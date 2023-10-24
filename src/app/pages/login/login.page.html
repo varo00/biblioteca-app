@@ -24,8 +24,8 @@
 
     <ion-item class="ion-margin">
       <ion-label position="floating">Password <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="password" type="password" id="pwd"></ion-input>
-      <ion-icon slot="end" name="eye" class="ion-margin-top" (click)="verPwd($event)"></ion-icon>
+      <ion-input required formControlName="password" [type]="this.verContrasena ? 'text' : 'password'" id="pwd"></ion-input>
+      <ion-icon slot="end" [name]="this.verContrasena ? 'eye-off' : 'eye'" class="ion-margin-top" (click)="verPwd()"></ion-icon>
     </ion-item>
     <ion-note color="danger" class="ion-margin-start" *ngIf="((this.loginForm.get('password').dirty || this.loginForm.get('password').touched) && this.loginForm.get('password').errors)">La contraseña debe tener al menos 6 caracteres</ion-note>
 

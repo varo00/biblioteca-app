@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  verContrasena = false;
 
   constructor(
     private auhService: AuthService,
@@ -54,16 +55,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  verPwd(event) {
-    const pwdHTML = document.getElementById('pwd');
-
-    if (pwdHTML.getAttribute('type') === 'password') {
-      pwdHTML.setAttribute('type', 'text');
-      event.target.name = 'eye-off';
-    } else {
-      pwdHTML.setAttribute('type', 'password');
-      event.target.name = 'eye';
-    }
-
+  verPwd() {
+    this.verContrasena = !this.verContrasena;
   }
 }
