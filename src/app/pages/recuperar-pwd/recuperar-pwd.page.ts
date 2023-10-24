@@ -60,7 +60,7 @@ export class RecuperarPwdPage implements OnInit {
 
       errorToast.fire({
         icon: 'error',
-        title: 'El correo introducido no es válido'
+        title: 'Correo no registrado'
       });
     })
   }
