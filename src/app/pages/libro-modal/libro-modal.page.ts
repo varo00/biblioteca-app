@@ -28,20 +28,26 @@ export class LibroModalPage implements OnInit {
   }
 
   habilitarEdicion(){
-    const inputHTML = document.getElementsByTagName('ion-input');
+    const inputHTML = document.getElementsByClassName('elem');
+    const btn = document.getElementById('btnEditar');
+
+    btn.removeAttribute('disabled');
 
     for (let i = 0; i < inputHTML.length; i++) {
       const el = inputHTML[i];
-      el.disabled ? el.removeAttribute('disabled') : '';
+      el.removeAttribute('disabled');
     }
   }
 
   deshabilitarEdicion(){
-    const inputHTML = document.getElementsByTagName('ion-input');
+    const inputHTML = document.getElementsByClassName('elem');
+    const btn = document.getElementById('btnEditar');
+
+    btn.setAttribute('disabled', 'true');
 
     for (let i = 0; i < inputHTML.length; i++) {
       const el = inputHTML[i];
-      el.disabled ? '' : el.setAttribute('disabled', 'true');
+      el.setAttribute('disabled', 'true');
     }
   }
 

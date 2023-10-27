@@ -17,7 +17,6 @@ import { LibroModalPage } from '../libro-modal/libro-modal.page';
 export class HomePage implements OnInit {
 
   libros: Libro[] = [];
-  userLoggeado: Usuario;
 
   constructor(
     private authService: AuthService,
@@ -25,20 +24,16 @@ export class HomePage implements OnInit {
     private libroService: LibrosService,
     private usuarioService: UsuarioService,
     private modalCtrl: ModalController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
   ) {
-    this.usuarioService.getUsusarios().subscribe(usuarios => {
-      this.userLoggeado = usuarios.filter(u => u['id'] === this.authService.currentUser.uid)[0];
-      console.log(this.userLoggeado);
+    this.libroService.getLibros().subscribe(res => {
+      this.libros = [...res.filter(lib => lib['usuario'] === this.authService.currentUser.uid)];
+      this.ordenarLibrosAlfabeticamente();
     });
-
   }
 
   ngOnInit(): void {
-    this.libroService.getLibros().subscribe(res => {
-      this.libros = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
-      this.ordenarLibrosAlfabeticamente();
-    });
+    
   }
 
   ordenarLibrosAlfabeticamente() {
@@ -71,7 +66,7 @@ export class HomePage implements OnInit {
 
       if (result.isConfirmed) {
         this.authService.logout().then(() => {
-          this.router.navigate(['/']);
+          this.router.navigate(['']);
         });
       }
 
@@ -85,12 +80,21 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: LibroModalPage,
       componentProps: { id: libro.doc },
-      breakpoints: [0, 0.5, 0.8],
-      initialBreakpoint: 0.5,
+      breakpoints: [0, 0.5, 0.8, 1],
+      initialBreakpoint: 0.8,
       backdropDismiss: true,
     });
 
     modal.present();
+  }
+
+  handleInput(event){
+    const query = event.target.value.toLowerCase();
+
+    this.libroService.getLibros().subscribe(res => {
+      const aux = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
+      this.libros = aux.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
+    });
   }
 
 }

@@ -8,6 +8,5 @@ export interface Usuario {
     nombre: string,
     apellidos: string,
     email: string,
-    id:string, // identificador de autenticacion --> es el mismo que el uid en la parte de Authentication de Firebase
-    doc?:string //el id del documento al que hace referencia el registro en firebase
+    doc?:string, //clave del documento y uid del usuario autenticado
 }

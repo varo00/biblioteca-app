@@ -1,0 +1,44 @@
+<ion-menu contentId="principal" menuId="first" side="start" type="overlay">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="3"></ion-col>
+          <ion-col size="6" class="ion-padding-start">
+            <ion-title>Menú</ion-title>
+          </ion-col>
+          <ion-col size="3"></ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-start">
+          <ion-col size="6">
+            <ion-chip>
+              <ion-icon name="book-outline"></ion-icon>
+              <ion-label>{{this.totalLibros}} libros</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col size="6">
+            <ion-chip>
+              <ion-icon name="checkmark-done-outline"></ion-icon>
+              <ion-label>{{this.librosLeidos}} leídos</ion-label>
+            </ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-menu-toggle>
+      <ion-item [routerLink]="['/home']">
+        <ion-icon slot="start" name="home-outline"></ion-icon>
+        Home
+      </ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item>Menu Item</ion-item>
+      <ion-item [routerLink]="['/perfil']">
+        <ion-icon slot="start" name="person-outline"></ion-icon>
+        Perfil
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>

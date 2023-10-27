@@ -10,24 +10,29 @@
   <div *ngIf="libro">
     <ion-item class="ion-margin-vertical">
       <ion-label position="fixed">Titulo</ion-label>
-      <ion-input [(ngModel)]="libro.titulo" disabled></ion-input>
+      <ion-input class="elem" [(ngModel)]="libro.titulo" disabled></ion-input>
     </ion-item>
 
     <ion-item class="ion-margin-vertical">
       <ion-label position="fixed">Autor</ion-label>
-      <ion-input [(ngModel)]="libro.autor" disabled></ion-input>
+      <ion-input class="elem" [(ngModel)]="libro.autor" disabled></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-vertical">
+      <ion-label>Leído</ion-label>
+      <ion-checkbox class="elem" [(ngModel)]="libro.leido" disabled></ion-checkbox>
     </ion-item>
 
     <ion-item class="ion-margin-vertical">
       <ion-label position="fixed">Comentario</ion-label>
-      <ion-input type="text" [(ngModel)]="libro.comentario" disabled></ion-input>
+      <ion-input class="elem" type="text" [(ngModel)]="libro.comentario" disabled></ion-input>
     </ion-item>
 
     <ion-buttons slot="start" class="ion-padding">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="6">
-            <ion-button (click)="actualizarLibro()" expand="block" color="success" shape="rounded">
+            <ion-button id="btnEditar" (click)="actualizarLibro()" expand="block" color="success" shape="rounded" disabled>
               <ion-icon slot="start" name="save-outline"></ion-icon>
               Actualizar
             </ion-button>

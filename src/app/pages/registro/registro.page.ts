@@ -42,7 +42,6 @@ export class RegistroPage implements OnInit {
         nombre: this.signUpForm.get('nombre').value,
         apellidos: this.signUpForm.get('apellidos').value,
         email: this.signUpForm.get('email').value,
-        id: res.user.uid,
       }
       this.userService.crearUsuario(userReg, res.user.uid).then(() => {
         Swal.fire({

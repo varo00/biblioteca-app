@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { LibrosService } from 'src/app/services/libros.service';
 import Swal from 'sweetalert2';
@@ -15,7 +14,6 @@ export class AnadirLibroPage implements OnInit {
   addBookForm : FormGroup;
 
   constructor(
-    private menuCtrl : MenuController,
     private fb : FormBuilder,
     private authService : AuthService,
     private libroService : LibrosService,
@@ -31,8 +29,6 @@ export class AnadirLibroPage implements OnInit {
       leido : [false, [ Validators.required]],
       usuario : [this.authService.currentUser.uid],
     });
-
-    this.menuCtrl.enable(false, 'first');
   }
 
   onSubmit(){

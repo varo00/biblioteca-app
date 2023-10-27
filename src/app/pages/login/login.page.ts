@@ -19,7 +19,6 @@ export class LoginPage implements OnInit {
     private auhService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private menuCtrl : MenuController,
   ) { }
 
   ngOnInit() {
@@ -28,8 +27,6 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-
-    this.menuCtrl.enable(false, 'first');
   }
 
   async login() {

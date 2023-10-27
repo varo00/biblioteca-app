@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc, doc, docData } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, doc, docData, setDoc } from '@angular/fire/firestore';
 import { Usuario } from '../interfaces/usuario';
 import { Observable } from 'rxjs';
 @Injectable({
@@ -11,15 +11,18 @@ export class UsuarioService {
     private firestore : Firestore
   ) { }
 
-  crearUsuario(user: Usuario, uid){
-    const userRef = collection(this.firestore, 'usuarios');
-    return addDoc(userRef, user);
-
+  getUsuarioById(id:string) : Observable<Usuario>{
+    const usuDocRef = doc(this.firestore, `usuarios/${id}`);
+    return docData(usuDocRef, {idField: 'doc'}) as Observable<Usuario>;
   }
 
   getUsusarios() : Observable<Usuario[]>{
     const usuariosRef = collection(this.firestore, 'usuarios');
     return collectionData(usuariosRef, {idField: 'doc'}) as Observable<Usuario[]>;
+  }
+
+  crearUsuario(user: Usuario, uid){
+    return setDoc(doc(this.firestore, `usuarios/${uid}`), user);
   }
 
   deleteById(id){
