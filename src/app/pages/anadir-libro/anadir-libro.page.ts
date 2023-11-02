@@ -27,13 +27,22 @@ export class AnadirLibroPage implements OnInit {
       autor : ['', [Validators.required]],
       comentario: [''],
       leido : [false, [ Validators.required]],
-      usuario : [this.authService.currentUser.uid],
+      imagen : ['', [Validators.required]],
     });
   }
 
-  onSubmit(){
-    console.log(this.addBookForm.value);
-    this.libroService.anadirLibro(this.addBookForm.value).then(() => {
+  async onSubmit(){
+    let path = `usuarios/${this.authService.currentUser.uid}/libros`;
+
+    // subir la imagen y obtener la url
+    let dataUrl = this.addBookForm.value['imagen'];
+    let imagenPath = `${this.authService.currentUser.uid}/${Date.now()}`;
+    let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
+    this.addBookForm.controls['imagen'].setValue(imagenUrl);
+
+
+
+    this.libroService.anadirLibro(this.addBookForm.value, path).then(() => {
       const exitoToast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -50,7 +59,13 @@ export class AnadirLibroPage implements OnInit {
       this.router.navigate(['/home']);
     }).catch(() => {
       console.log('error al añadir un libro');
-    })
+    });
+  }
+
+  async takeImage(){
+    console.log('take picture');
+    const dataUrl = (await this.libroService.takePicture()).dataUrl;
+    this.addBookForm.controls['imagen'].setValue(dataUrl);
   }
 
 }

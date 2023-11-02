@@ -11,9 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./libro-modal.page.scss'],
 })
 export class LibroModalPage implements OnInit {
-  @Input() id : string
-
-  libro : Libro;
+  @Input() libro : Libro
 
   constructor(
     private libroService : LibrosService,
@@ -22,9 +20,6 @@ export class LibroModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.libroService.getLibroById(this.id).subscribe( res => {
-      this.libro = res;
-    });
   }
 
   habilitarEdicion(){
@@ -67,7 +62,9 @@ export class LibroModalPage implements OnInit {
       Toast.fire({
         icon: 'success',
         title: '¡Libro actualizado!'
-      })
+      });
+
+      this.modalCtrl.dismiss();
     }else{
       const alert = await this.alertCtrl.create({
         message: 'Tienes campos sin rellenar',

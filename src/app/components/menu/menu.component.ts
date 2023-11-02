@@ -16,10 +16,12 @@ export class MenuComponent  implements OnInit {
     private libroSvc : LibrosService,
     private authSvc : AuthService,
   ) {
-    this.libroSvc.getLibros().subscribe(res => {
-      this.librosLeidos = res.filter(lib => lib['usuario'] === this.authSvc.currentUser.uid && lib['leido']).length || 0;
-      this.totalLibros = res.filter(lib => lib['usuario'] === this.authSvc.currentUser.uid).length || 0;
-    });
+    let path = `usuarios/${this.authSvc.currentUser.uid}/libros`;
+
+    this.libroSvc.getLibros(path).subscribe( res => {
+      this.librosLeidos = res.filter(lib => lib['leido']).length || 0;
+      this.totalLibros = res.length || 0;
+    })
   }
 
   ngOnInit() {}

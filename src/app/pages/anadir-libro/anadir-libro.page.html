@@ -15,7 +15,18 @@
     </ion-toolbar>
   </ion-header>
 
-  <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()" class="ion-padding ion-text-center">
+
+    <ion-avatar *ngIf="addBookForm.value['imagen']">
+      <img [src]="addBookForm.value['imagen']"/>
+    </ion-avatar>
+
+    <ion-icon class="image-icon" *ngIf="!addBookForm.value['imagen']" name="image-outline"></ion-icon>
+
+    <ion-button (click)="takeImage()" expand="full" fill="clear" shape="round" class="ion-margin">
+      Tomar Foto
+    </ion-button>
+
     <ion-item class="ion-margin">
       <ion-label position="floating">Título <ion-text color="danger">*</ion-text></ion-label>
       <ion-input required formControlName="titulo" type="text"></ion-input>
@@ -35,13 +46,8 @@
       <ion-textarea formControlName="comentario"></ion-textarea>
     </ion-item>
 
-    <ion-button 
-      expand="full" 
-      fill="solid" 
-      shape="round" 
-      type="submit" 
-      [disabled]="addBookForm.invalid" class="ion-margin"
-    >
+    <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="addBookForm.invalid"
+      class="ion-margin">
       Añadir
     </ion-button>
   </form>

@@ -21,11 +21,12 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline" placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar>
+  <!-- <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline" placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar> -->
 
 
   <div *ngIf="libros.length !== 0; else elseBlock">
     <ion-card *ngFor="let libro of libros" (click)="abrirLibro(libro)">
+      <ion-img [src]="libro.imagen"></ion-img>
       <ion-card-header>
         <ion-card-title>{{libro.titulo}}</ion-card-title>
         <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
@@ -38,7 +39,7 @@
   </ng-template>
 
 
-  <ion-fab vertical="bottom" horizontal="end" class="ion-margin">
+  <ion-fab vertical="bottom" horizontal="end" class="ion-margin" slot="fixed">
     <ion-fab-button [routerLink]="['/anadir-libro']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

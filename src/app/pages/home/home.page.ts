@@ -22,13 +22,16 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private libroService: LibrosService,
-    private usuarioService: UsuarioService,
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
   ) {
-    this.libroService.getLibros().subscribe(res => {
-      this.libros = [...res.filter(lib => lib['usuario'] === this.authService.currentUser.uid)];
-      this.ordenarLibrosAlfabeticamente();
+
+    console.log(this.authService.currentUser.uid);
+
+    let path = `usuarios/${this.authService.currentUser.uid}/libros`;
+    
+    this.libroService.getLibros(path).subscribe( res => {
+      this.libros = res;
     });
   }
 
@@ -79,7 +82,7 @@ export class HomePage implements OnInit {
   async abrirLibro(libro) {
     const modal = await this.modalCtrl.create({
       component: LibroModalPage,
-      componentProps: { id: libro.doc },
+      componentProps: { libro: libro },
       breakpoints: [0, 0.5, 0.8, 1],
       initialBreakpoint: 0.8,
       backdropDismiss: true,
@@ -88,13 +91,13 @@ export class HomePage implements OnInit {
     modal.present();
   }
 
-  handleInput(event){
-    const query = event.target.value.toLowerCase();
+  // handleInput(event){
+  //   const query = event.target.value.toLowerCase();
 
-    this.libroService.getLibros().subscribe(res => {
-      const aux = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
-      this.libros = aux.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
-    });
-  }
+  //   this.libroService.getLibros().subscribe(res => {
+  //     const aux = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
+  //     this.libros = aux.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
+  //   });
+  // }
 
 }
