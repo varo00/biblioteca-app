@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
 import { MenuController, ModalController } from '@ionic/angular';
-import { Usuario } from '../../interfaces/usuario';
 import { LibroModalPage } from '../libro-modal/libro-modal.page';
 
 @Component({
@@ -17,6 +16,8 @@ import { LibroModalPage } from '../libro-modal/libro-modal.page';
 export class HomePage implements OnInit {
 
   libros: Libro[] = [];
+  path = `usuarios/${this.authService.currentUser.uid}/libros`;
+
 
   constructor(
     private authService: AuthService,
@@ -25,18 +26,15 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
   ) {
-
-    console.log(this.authService.currentUser.uid);
-
-    let path = `usuarios/${this.authService.currentUser.uid}/libros`;
-    
-    this.libroService.getLibros(path).subscribe( res => {
-      this.libros = res;
-    });
+    this.ordenarLibrosAlfabeticamente();
   }
 
   ngOnInit(): void {
-    
+
+    this.libroService.getLibros(this.path).subscribe( res => {
+      this.libros = res;
+      this.ordenarLibrosAlfabeticamente();
+    });
   }
 
   ordenarLibrosAlfabeticamente() {
@@ -47,11 +45,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  /*
-      Al entrar aqui desde una pagina donde el menu está deshabilitado
-      tengo que volverlo a activar porque si no lo hago no aparece el icono
-      hasta que la página se recargue
-  */
+
   ionViewWillEnter() {
     this.menuCtrl.enable(true, 'first');
   }
@@ -84,20 +78,18 @@ export class HomePage implements OnInit {
       component: LibroModalPage,
       componentProps: { libro: libro },
       breakpoints: [0, 0.5, 0.8, 1],
-      initialBreakpoint: 0.8,
+      initialBreakpoint: 0.5,
       backdropDismiss: true,
+      mode: 'ios',
     });
 
     modal.present();
   }
 
-  // handleInput(event){
-  //   const query = event.target.value.toLowerCase();
-
-  //   this.libroService.getLibros().subscribe(res => {
-  //     const aux = res.filter(lib => lib['usuario'] === this.authService.currentUser.uid);
-  //     this.libros = aux.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
-  //   });
-  // }
-
+  handleInput(event){
+    const query = event.target.value.toLowerCase();
+    this.libroService.getLibros(this.path).subscribe(res => {
+      this.libros = res.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
+    });
+  }
 }

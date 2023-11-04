@@ -17,9 +17,9 @@ export class LibrosService {
     private authSvc  : AuthService,
   ) { }
 
-  getLibros(path:string, collectionQuery ?: any): Observable<Libro[]> {
+  getLibros(path:string): Observable<Libro[]> {
     const ref = collection(this.firestore, path);
-    return collectionData(query(ref, collectionQuery), {idField: 'doc'}) as Observable<Libro[]>;
+    return collectionData(ref, {idField: 'doc'}) as Observable<Libro[]>;
   }
 
   getLibroById(id: string): Observable<Libro> {
@@ -28,9 +28,6 @@ export class LibrosService {
   }
 
   anadirLibro(libro: Libro, path) {
-    // const libroRef = collection(this.firestore, 'libros');
-    // return addDoc(libroRef, libro);
-
     return addDoc(collection(this.firestore, path), libro);
   }
 

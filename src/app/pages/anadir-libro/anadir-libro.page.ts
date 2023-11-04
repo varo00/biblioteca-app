@@ -36,7 +36,7 @@ export class AnadirLibroPage implements OnInit {
 
     // subir la imagen y obtener la url
     let dataUrl = this.addBookForm.value['imagen'];
-    let imagenPath = `${this.authService.currentUser.uid}/${Date.now()}`;
+    let imagenPath = `${this.authService.currentUser.uid}/libros/${Date.now()}`;
     let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
     this.addBookForm.controls['imagen'].setValue(imagenUrl);
 
