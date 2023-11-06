@@ -21,7 +21,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline" placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar>
+  <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline"
+    placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar>
 
 
   <div *ngIf="libros.length !== 0; else elseBlock">
@@ -30,6 +31,8 @@
       <ion-card-header>
         <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
         <ion-card-title>{{libro.titulo}}</ion-card-title>
+
+        <ion-icon slot="end" name="trash-outline" color="danger" size="large"></ion-icon>
       </ion-card-header>
 
       <ion-card-content>
@@ -37,7 +40,7 @@
       </ion-card-content>
     </ion-card>
   </div>
-  
+
   <ng-template #elseBlock class="ion-margin-vertical">
     <ion-title>Aún no tienes libros en tu biblioteca</ion-title>
   </ng-template>

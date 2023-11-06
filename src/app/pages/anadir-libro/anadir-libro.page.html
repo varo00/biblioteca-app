@@ -51,6 +51,10 @@
       class="ion-margin">
       {{this.libro ? 'actualizar' : 'añadir'}}
     </ion-button>
+
+    <ion-button (click)="this.confirmarEliminarLibro()" expand="full" fill="solid" shape="round" class="ion-margin" *ngIf="this.libro" color="danger">
+      eliminar
+    </ion-button>
   </form>
 
 </ion-content>

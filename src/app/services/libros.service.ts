@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/libro';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage';
+import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from 'firebase/storage';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -31,9 +31,8 @@ export class LibrosService {
     return addDoc(collection(this.firestore, path), libro);
   }
 
-  deleteLibro(libro: Libro) {
-    const libroDocRef = doc(this.firestore, `usuarios/${this.authSvc.currentUser.uid}/libros/${libro.doc}`);
-    return deleteDoc(libroDocRef);
+  deleteLibro(path) {
+    return deleteDoc(doc(getFirestore(), path));
   }
   
   updateLibro(path, data){
@@ -60,6 +59,10 @@ export class LibrosService {
 
   async getFilePath(url : string){
     return ref(getStorage(), url).fullPath;
+  }
+
+  deleteFile(path){
+    return deleteObject(ref(getStorage(), path));
   }
 
 }
