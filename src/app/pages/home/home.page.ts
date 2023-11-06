@@ -16,6 +16,10 @@ import { AnadirLibroPage } from '../anadir-libro/anadir-libro.page';
 export class HomePage implements OnInit {
 
   libros: Libro[] = [];
+  librosLeidos: Libro[] = [];
+
+  segmentoElegido : string = 'todos';
+
   path = `usuarios/${this.authService.currentUser.uid}/libros`;
 
 
@@ -26,19 +30,22 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
   ) {
-    this.ordenarLibrosAlfabeticamente();
+    this.ordenarLibrosAlfabeticamente(this.libros);
   }
 
   ngOnInit(): void {
 
-    this.libroService.getLibros(this.path).subscribe( res => {
+    this.libroService.getLibros(this.path).subscribe(res => {
       this.libros = res;
-      this.ordenarLibrosAlfabeticamente();
+      this.librosLeidos = res.filter(lib => lib.leido);
+
+      this.ordenarLibrosAlfabeticamente(this.libros);
+      this.ordenarLibrosAlfabeticamente(this.librosLeidos);
     });
   }
 
-  ordenarLibrosAlfabeticamente() {
-    this.libros = this.libros.sort((a, b) => {
+  ordenarLibrosAlfabeticamente(libros: Libro[]) {
+    libros = libros.sort((a, b) => {
       const tituloA = a.titulo.toLowerCase();
       const tituloB = b.titulo.toLowerCase();
       return tituloA.localeCompare(tituloB);
@@ -85,10 +92,14 @@ export class HomePage implements OnInit {
     modal.present();
   }
 
-  handleInput(event){
+  handleInput(event) {
     const query = event.target.value.toLowerCase();
     this.libroService.getLibros(this.path).subscribe(res => {
       this.libros = res.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
     });
+  }
+
+  segmentChanged(ev) {
+    this.segmentoElegido = ev.detail.value;
   }
 }

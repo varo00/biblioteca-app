@@ -21,28 +21,57 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-segment value="todos" mode="ios" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="todos">
+      <ion-label>Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="leidos">
+      <ion-label>Leídos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
   <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline"
     placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar>
 
 
-  <div *ngIf="libros.length !== 0; else elseBlock">
-    <ion-card *ngFor="let libro of libros" (click)="abrirLibro(libro)" mode="ios">
-      <ion-img [src]="libro.imagen"></ion-img>
-      <ion-card-header>
-        <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
-        <ion-card-title>{{libro.titulo}}</ion-card-title>
+  <div *ngIf="this.segmentoElegido === 'todos'">
+    <div *ngIf="libros.length !== 0; else elseBlock1">
+      <ion-card *ngFor="let libro of libros" (click)="abrirLibro(libro)" mode="ios">
+        <ion-img [src]="libro.imagen"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
+          <ion-card-title>{{libro.titulo}}</ion-card-title>
+        </ion-card-header>
+  
+        <ion-card-content>
+          {{libro.comentario}}
+        </ion-card-content>
+      </ion-card>
+    </div>
 
-        <ion-icon slot="end" name="trash-outline" color="danger" size="large"></ion-icon>
-      </ion-card-header>
-
-      <ion-card-content>
-        {{libro.comentario}}
-      </ion-card-content>
-    </ion-card>
   </div>
-
-  <ng-template #elseBlock class="ion-margin-vertical">
+  <ng-template #elseBlock1 class="ion-margin-vertical">
     <ion-title>Aún no tienes libros en tu biblioteca</ion-title>
+  </ng-template>
+
+
+  <div *ngIf="this.segmentoElegido === 'leidos'">
+    <div *ngIf="librosLeidos.length !== 0; else elseBlock2">
+      <ion-card *ngFor="let libro of librosLeidos" (click)="abrirLibro(libro)" mode="ios">
+        <ion-img [src]="libro.imagen"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
+          <ion-card-title>{{libro.titulo}}</ion-card-title>
+        </ion-card-header>
+  
+        <ion-card-content>
+          {{libro.comentario}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <ng-template #elseBlock2 class="ion-margin-vertical ion-margin-start">
+    <ion-title>Aún no has leido ningún libro</ion-title>
   </ng-template>
 
 
