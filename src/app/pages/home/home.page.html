@@ -34,11 +34,11 @@
   </ion-segment>
 
   <ion-searchbar placeholder="Buscar Título" inputmode="text" type="text" (ionInput)="buscar($event)" [debounce]="500"
-    showCancelButton="focus"></ion-searchbar>
+    showCancelButton="focus" class="ion-margin-bottom"></ion-searchbar>
 
   <div *ngIf="this.segmentoElegido === 'todos'">
     <div *ngIf="libros.length !== 0; else elseBlock1">
-      <ion-card *ngFor="let libro of libros | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
+      <ion-card *ngFor="let libro of libros | filtro:tituloBuscado:'titulo'" (click)="abrirLibro(libro)" mode="ios">
         <ion-img [src]="libro.imagen"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
@@ -59,7 +59,7 @@
 
   <div *ngIf="this.segmentoElegido === 'leidos'">
     <div *ngIf="librosLeidos.length !== 0; else elseBlock2">
-      <ion-card *ngFor="let libro of librosLeidos | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
+      <ion-card *ngFor="let libro of librosLeidos | filtro:tituloBuscado:'titulo'" (click)="abrirLibro(libro)" mode="ios">
         <ion-img [src]="libro.imagen"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
@@ -73,12 +73,13 @@
     </div>
   </div>
   <ng-template #elseBlock2 class="ion-margin-vertical ion-margin-start">
-    <ion-title>Aún no has leido ningún libro</ion-title>
+    <ion-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-title>
+    <ion-title *ngIf="this.libros.length !== 0">Aún no has leido ningún libro</ion-title>
   </ng-template>
 
   <div *ngIf="this.segmentoElegido === 'pendientes'">
     <div *ngIf="librosPendientes.length !== 0; else elseBlock3">
-      <ion-card *ngFor="let libro of librosPendientes | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
+      <ion-card *ngFor="let libro of librosPendientes | filtro:tituloBuscado:'titulo'" (click)="abrirLibro(libro)" mode="ios">
         <ion-img [src]="libro.imagen"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
@@ -92,7 +93,8 @@
     </div>
   </div>
   <ng-template #elseBlock3 class="ion-margin-vertical">
-    <ion-title>Has leido toda tu biblioteca</ion-title>
+    <ion-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-title>
+    <ion-title *ngIf="this.libros.length !== 0">Has leído toda tu biblioteca</ion-title>
   </ng-template>
 
 
