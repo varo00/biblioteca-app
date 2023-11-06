@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
@@ -17,6 +16,9 @@ export class HomePage implements OnInit {
 
   libros: Libro[] = [];
   librosLeidos: Libro[] = [];
+  librosPendientes: Libro[] = [];
+
+  tituloBuscado : string = '';
 
   segmentoElegido : string = 'todos';
 
@@ -38,9 +40,11 @@ export class HomePage implements OnInit {
     this.libroService.getLibros(this.path).subscribe(res => {
       this.libros = res;
       this.librosLeidos = res.filter(lib => lib.leido);
+      this.librosPendientes = res.filter(lib => !lib.leido);
 
       this.ordenarLibrosAlfabeticamente(this.libros);
       this.ordenarLibrosAlfabeticamente(this.librosLeidos);
+      this.ordenarLibrosAlfabeticamente(this.librosPendientes);
     });
   }
 
@@ -92,11 +96,8 @@ export class HomePage implements OnInit {
     modal.present();
   }
 
-  handleInput(event) {
-    const query = event.target.value.toLowerCase();
-    this.libroService.getLibros(this.path).subscribe(res => {
-      this.libros = res.filter((d) => d.titulo.toLowerCase().indexOf(query) > -1);
-    });
+  buscar(event) {
+    this.tituloBuscado = event.detail.value;
   }
 
   segmentChanged(ev) {

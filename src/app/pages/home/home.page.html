@@ -28,21 +28,23 @@
     <ion-segment-button value="leidos">
       <ion-label>Leídos</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="pendientes">
+      <ion-label>Pendientes</ion-label>
+    </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar [debounce]="700" (ionInput)="handleInput($event)" clearIcon="close-circle-outline"
-    placeholder="Buscar Título" class="ion-margin-bottom"></ion-searchbar>
-
+  <ion-searchbar placeholder="Buscar Título" inputmode="text" type="text" (ionInput)="buscar($event)" [debounce]="500"
+    showCancelButton="focus"></ion-searchbar>
 
   <div *ngIf="this.segmentoElegido === 'todos'">
     <div *ngIf="libros.length !== 0; else elseBlock1">
-      <ion-card *ngFor="let libro of libros" (click)="abrirLibro(libro)" mode="ios">
+      <ion-card *ngFor="let libro of libros | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
         <ion-img [src]="libro.imagen"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
           <ion-card-title>{{libro.titulo}}</ion-card-title>
         </ion-card-header>
-  
+
         <ion-card-content>
           {{libro.comentario}}
         </ion-card-content>
@@ -57,13 +59,13 @@
 
   <div *ngIf="this.segmentoElegido === 'leidos'">
     <div *ngIf="librosLeidos.length !== 0; else elseBlock2">
-      <ion-card *ngFor="let libro of librosLeidos" (click)="abrirLibro(libro)" mode="ios">
+      <ion-card *ngFor="let libro of librosLeidos | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
         <ion-img [src]="libro.imagen"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
           <ion-card-title>{{libro.titulo}}</ion-card-title>
         </ion-card-header>
-  
+
         <ion-card-content>
           {{libro.comentario}}
         </ion-card-content>
@@ -74,8 +76,27 @@
     <ion-title>Aún no has leido ningún libro</ion-title>
   </ng-template>
 
+  <div *ngIf="this.segmentoElegido === 'pendientes'">
+    <div *ngIf="librosPendientes.length !== 0; else elseBlock3">
+      <ion-card *ngFor="let libro of librosPendientes | filtro:tituloBuscado" (click)="abrirLibro(libro)" mode="ios">
+        <ion-img [src]="libro.imagen"></ion-img>
+        <ion-card-header>
+          <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
+          <ion-card-title>{{libro.titulo}}</ion-card-title>
+        </ion-card-header>
 
-  <ion-fab vertical="bottom" horizontal="end" class="ion-margin" slot="fixed">
+        <ion-card-content>
+          {{libro.comentario}}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <ng-template #elseBlock3 class="ion-margin-vertical">
+    <ion-title>Has leido toda tu biblioteca</ion-title>
+  </ng-template>
+
+
+  <ion-fab vertical="bottom" horizontal="end" class="ion-margin" slot="fixed" *ngIf="this.segmentoElegido === 'todos'">
     <ion-fab-button [routerLink]="['/anadir-libro']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
