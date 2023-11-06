@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, updateDoc, query, getFirestore } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData, getFirestore, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/libro';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
@@ -35,21 +35,18 @@ export class LibrosService {
     const libroDocRef = doc(this.firestore, `usuarios/${this.authSvc.currentUser.uid}/libros/${libro.doc}`);
     return deleteDoc(libroDocRef);
   }
-
-  updateLibro(libro: Libro) {
-    const libroDocRef = doc(this.firestore, `usuarios/${this.authSvc.currentUser.uid}/libros/${libro.doc}`);
-    return updateDoc(libroDocRef, {
-      titulo: libro.titulo,
-      autor: libro.autor,
-      comentario: libro.comentario,
-      leido: libro.leido
-    });
+  
+  updateLibro(path, data){
+    return updateDoc(doc(getFirestore(), path), data);
   }
 
 
+  /*
+    SUBIR IMAGEN DE LOS LIBROS
+  */
   async uploadImage(path: string, data_url: any) {
     return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() => {
-      return getDownloadURL(ref(getStorage(), path))
+      return getDownloadURL(ref(getStorage(), path));
     });
   }
 
@@ -59,6 +56,10 @@ export class LibrosService {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera,
     });
+  }
+
+  async getFilePath(url : string){
+    return ref(getStorage(), url).fullPath;
   }
 
 }

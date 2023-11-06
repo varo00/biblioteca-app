@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
 import { MenuController, ModalController } from '@ionic/angular';
-import { LibroModalPage } from '../libro-modal/libro-modal.page';
+import { AnadirLibroPage } from '../anadir-libro/anadir-libro.page';
 
 @Component({
   selector: 'app-home',
@@ -75,12 +75,11 @@ export class HomePage implements OnInit {
 
   async abrirLibro(libro) {
     const modal = await this.modalCtrl.create({
-      component: LibroModalPage,
+      component: AnadirLibroPage,
       componentProps: { libro: libro },
       breakpoints: [0, 0.5, 0.8, 1],
-      initialBreakpoint: 0.5,
+      initialBreakpoint: 0.8,
       backdropDismiss: true,
-      mode: 'ios',
     });
 
     modal.present();

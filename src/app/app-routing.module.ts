@@ -28,11 +28,6 @@ const routes: Routes = [
     ...canActivate(redirectUnauthorizedToLogin),
   },
   {
-    path: 'libro-modal',
-    loadChildren: () => import('./pages/libro-modal/libro-modal.module').then( m => m.LibroModalPageModule),
-    ...canActivate(redirectUnauthorizedToLogin),
-  },
-  {
     path: 'anadir-libro',
     loadChildren: () => import('./pages/anadir-libro/anadir-libro.module').then( m => m.AnadirLibroPageModule),
     ...canActivate(redirectUnauthorizedToLogin),

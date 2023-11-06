@@ -1,5 +1,4 @@
 export interface Libro{
-    // usuario     ?: string,
     autor       : string,
     titulo      : string,
     imagen      : string,
