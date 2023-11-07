@@ -1,3 +1,17 @@
 ion-menu::part(container) {
     border-radius: 0 20px 0 0;
 }
+
+ion-item{
+    font-size: 1.6rem;
+}
+
+ion-avatar{
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
+.icono-vacio{
+    font-size: 120px;
+}

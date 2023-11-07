@@ -8,5 +8,6 @@ export interface Usuario {
     nombre: string,
     apellidos: string,
     email: string,
+    imagen?:string,
     doc?:string, //clave del documento y uid del usuario autenticado
 }

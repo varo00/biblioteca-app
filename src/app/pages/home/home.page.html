@@ -33,8 +33,7 @@
     </ion-segment-button>
   </ion-segment>
 
-  <ion-searchbar placeholder="Buscar Título" inputmode="text" type="text" (ionInput)="buscar($event)" [debounce]="500"
-    showCancelButton="focus" class="ion-margin-bottom"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar Título" inputmode="text" type="text" (ionInput)="buscar($event)" [debounce]="500" showCancelButton="focus" class="ion-margin-bottom"></ion-searchbar>
 
   <div *ngIf="this.segmentoElegido === 'todos'">
     <div *ngIf="libros.length !== 0; else elseBlock1">

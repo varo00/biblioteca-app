@@ -30,7 +30,7 @@ export class MenuComponent  implements OnInit {
 
     this.usuarioSvc.getUsuarioById(this.authSvc.currentUser.uid).subscribe( res => {
       this.usuario = res;
-    })
+    });
   }
 
   ngOnInit() {}

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc, doc, docData, setDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, addDoc, doc, docData, setDoc, deleteDoc, getFirestore, updateDoc } from '@angular/fire/firestore';
 import { Usuario } from '../interfaces/usuario';
 import { Observable } from 'rxjs';
+import { getDownloadURL, getStorage, ref, uploadString } from '@angular/fire/storage';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,11 +27,32 @@ export class UsuarioService {
     return setDoc(doc(this.firestore, `usuarios/${uid}`), user);
   }
 
-  deleteById(id){
-    
+  deleteUsuario(path) {
+    return deleteDoc(doc(getFirestore(), path));
+  }
+  
+  updateUsuario(path, data){
+    return updateDoc(doc(getFirestore(), path), data);
   }
 
-  updateUsuario(user:Usuario){
+  /*
+    avatar del usuario
+  */ 
+  async subirFotoPerfil(path: string, data_url: any) {
+    return uploadString(ref(getStorage(), path), data_url, 'data_url').then(() => {
+      return getDownloadURL(ref(getStorage(), path));
+    });
+  }
 
+  async tomarFotoPerfil() {
+    return await Camera.getPhoto({
+      quality: 90,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Camera,
+    });
+  }
+
+  async rutaFotoPerfil(url : string){
+    return ref(getStorage(), url).fullPath;
   }
 }
