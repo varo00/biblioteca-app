@@ -154,7 +154,6 @@ export class AnadirLibroPage implements OnInit {
   }
 
   async takeImage() {
-    console.log('take picture');
     const dataUrl = (await this.libroService.takePicture()).dataUrl;
     this.addBookForm.controls['imagen'].setValue(dataUrl);
   }

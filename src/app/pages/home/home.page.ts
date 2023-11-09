@@ -88,8 +88,8 @@ export class HomePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: AnadirLibroPage,
       componentProps: { libro: libro },
-      breakpoints: [0, 0.5, 0.7, 0.85],
-      initialBreakpoint: 0.85,
+      breakpoints: [0, 0.5, 0.8, 1],
+      initialBreakpoint: 0.8,
       backdropDismiss: true,
     });
 
