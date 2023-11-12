@@ -23,13 +23,19 @@
 
   <ion-segment value="todos" mode="ios" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="todos">
-      <ion-label>Todos</ion-label>
+      <ion-label>
+        Todos <ion-badge color="primary">{{this.libros.length || 0}}</ion-badge>
+      </ion-label>
     </ion-segment-button>
     <ion-segment-button value="leidos">
-      <ion-label>Leídos</ion-label>
+      <ion-label>
+        Leídos <ion-badge color="primary">{{this.librosLeidos.length || 0}}</ion-badge>
+      </ion-label>
     </ion-segment-button>
     <ion-segment-button value="pendientes">
-      <ion-label>Pendientes</ion-label>
+      <ion-label>
+        Pendientes<ion-badge color="primary">{{this.librosPendientes.length || 0}}</ion-badge>
+      </ion-label>
     </ion-segment-button>
   </ion-segment>
 
