@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MenuController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registro',
@@ -22,6 +22,7 @@ export class RegistroPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private menuCtrl: MenuController,
+    private loadingCtrl : LoadingController,
   ) { }
 
   ngOnInit() {
@@ -37,8 +38,13 @@ export class RegistroPage implements OnInit {
   }
 
   async onSubmit() {
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular'
+    });
+    await loading.present();
 
     this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(async res => {
+
       
       if(this.signUpForm.get('imagen').value){
         let dataUrl = this.signUpForm.value['imagen'];
@@ -54,6 +60,7 @@ export class RegistroPage implements OnInit {
         imagen: this.signUpForm.get('imagen').value
       }
 
+      loading.dismiss();
       this.userService.crearUsuario(userReg, res.user.uid).then(() => {
         Swal.fire({
           icon: 'success',
@@ -61,10 +68,11 @@ export class RegistroPage implements OnInit {
           heightAuto: false,
         }).then(() => {
           this.router.navigate(['/home']);
-        })
+        });
       });
 
     }).catch(() => {
+      loading.dismiss();
       Swal.fire({
         icon: 'error',
         title: 'El email ya existe, prueba otro',
