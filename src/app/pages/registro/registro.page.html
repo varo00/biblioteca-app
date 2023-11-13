@@ -14,7 +14,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="ion-text-center">
+
+    <ion-avatar *ngIf="signUpForm.value['imagen']">
+      <img [src]="signUpForm.value['imagen']"/>
+    </ion-avatar>
+
+    <ion-icon class="image-icon ion-margin-top" *ngIf="!signUpForm.value['imagen']" name="person-outline"></ion-icon>
+
+    <ion-button (click)="takeImage()" expand="full" fill="clear" shape="round" class="ion-margin">
+      Tomar Foto
+    </ion-button>
 
     <ion-item class="ion-margin">
       <ion-label position="floating">Correo Electrónico<ion-text color="danger">*</ion-text></ion-label>

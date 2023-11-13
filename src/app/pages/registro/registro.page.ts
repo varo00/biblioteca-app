@@ -29,7 +29,8 @@ export class RegistroPage implements OnInit {
       nombre: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      imagen: [''],
     });
 
     this.menuCtrl.enable(false, 'first');
@@ -37,12 +38,22 @@ export class RegistroPage implements OnInit {
 
   async onSubmit() {
 
-    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(res => {
+    this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(async res => {
+      
+      if(this.signUpForm.get('imagen').value){
+        let dataUrl = this.signUpForm.value['imagen'];
+        let imagenPath = `${this.authService.currentUser.uid}/perfil`;
+        let imagenUrl = await this.userService.subirFotoPerfil(imagenPath, dataUrl);
+        this.signUpForm.controls['imagen'].setValue(imagenUrl);
+      }
+
       let userReg = {
         nombre: this.signUpForm.get('nombre').value,
         apellidos: this.signUpForm.get('apellidos').value,
         email: this.signUpForm.get('email').value,
+        imagen: this.signUpForm.get('imagen').value
       }
+
       this.userService.crearUsuario(userReg, res.user.uid).then(() => {
         Swal.fire({
           icon: 'success',
@@ -65,5 +76,10 @@ export class RegistroPage implements OnInit {
 
   verPwd() {
     this.verContrasena = !this.verContrasena;
+  }
+
+  async takeImage() {
+    const dataUrl = (await this.userService.tomarFotoPerfil()).dataUrl;
+    this.signUpForm.controls['imagen'].setValue(dataUrl);
   }
 }
