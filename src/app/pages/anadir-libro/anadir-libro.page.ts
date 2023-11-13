@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Libro } from 'src/app/interfaces/libro';
 import { AuthService } from 'src/app/services/auth.service';
 import { LibrosService } from 'src/app/services/libros.service';
@@ -24,7 +24,7 @@ export class AnadirLibroPage implements OnInit {
     private libroService: LibrosService,
     private router: Router,
     private modalCtrl: ModalController,
-    private alertCtrl : AlertController,
+    private loadingCtrl : LoadingController,
   ) { }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class AnadirLibroPage implements OnInit {
       autor: ['', [Validators.required]],
       comentario: [''],
       leido: [false, [Validators.required]],
-      imagen: ['', [Validators.required]],
+      imagen: [''],
     });
 
     if (this.libro) {
@@ -48,12 +48,13 @@ export class AnadirLibroPage implements OnInit {
 
   async createLibro() {
     let path = `usuarios/${this.authService.currentUser.uid}/libros`;
-
-    // subir la imagen y obtener la url
-    let dataUrl = this.addBookForm.value['imagen'];
-    let imagenPath = `${this.authService.currentUser.uid}/libros/${Date.now()}`;
-    let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
-    this.addBookForm.controls['imagen'].setValue(imagenUrl);
+    if(this.addBookForm.controls['imagen'].value){
+      // subir la imagen y obtener la url
+      let dataUrl = this.addBookForm.value['imagen'];
+      let imagenPath = `${this.authService.currentUser.uid}/libros/${Date.now()}`;
+      let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
+      this.addBookForm.controls['imagen'].setValue(imagenUrl);
+    }
 
 
 
@@ -83,11 +84,15 @@ export class AnadirLibroPage implements OnInit {
     if (this.addBookForm.value['imagen'] !== this.libro.imagen) {
       // subir la imagen y obtener la url
       let dataUrl = this.addBookForm.value['imagen'];
-      let imagenPath = await this.libroService.getFilePath(this.libro.imagen);
+      let imagenPath = await this.libroService.getFilePath(this.libro.imagen) || `${this.authService.currentUser.uid}/libros/${Date.now()}`;
       let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
       this.addBookForm.controls['imagen'].setValue(imagenUrl);
     }
 
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular'
+    });
+    await loading.present();
 
 
     this.libroService.updateLibro(path, this.addBookForm.value).then(() => {
@@ -104,6 +109,7 @@ export class AnadirLibroPage implements OnInit {
         title: 'Libro actualizado exitosamente',
       });
 
+      this.loadingCtrl.dismiss();
       this.modalCtrl.dismiss();
     }).catch(() => {
       console.log('error al actualizar un libro');

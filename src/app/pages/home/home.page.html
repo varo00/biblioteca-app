@@ -44,7 +44,7 @@
   <div *ngIf="this.segmentoElegido === 'todos'">
     <div *ngIf="libros.length !== 0; else elseBlock1">
       <ion-card *ngFor="let libro of libros | filtro:tituloBuscado:'titulo'" (click)="abrirLibro(libro)" mode="ios">
-        <ion-img [src]="libro.imagen"></ion-img>
+        <ion-img [src]="libro.imagen ? libro.imagen : '../../../assets/images/no-imagen.png'"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
           <ion-card-title>{{libro.titulo}}</ion-card-title>
