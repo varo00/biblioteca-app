@@ -71,8 +71,7 @@ export class HomePage implements OnInit {
 
       if (result.isConfirmed) {
         this.authService.logout().then(() => {
-          // this.router.navigate(['']);
-          this.router.navigateByUrl('', {replaceUrl : true});
+          this.router.navigate([''], { replaceUrl: true});
         });
       }
 

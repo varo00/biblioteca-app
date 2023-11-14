@@ -29,6 +29,14 @@ export class LoginPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.loginForm.get('email').setValue(null);
+    this.loginForm.get('password').setValue(null);
+
+    this.loginForm.markAsUntouched();
+    this.loginForm.markAsPristine();
+  }
+
   async login() {
     this.auhService.login(this.loginForm.value).then(res => {
       
