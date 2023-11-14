@@ -6,6 +6,13 @@
     <ion-buttons slot="start" *ngIf="!this.libro">
       <ion-back-button [defaultHref]="'home'"></ion-back-button>
     </ion-buttons>
+
+    <ion-buttons slot="end" *ngIf="this.libro" class="ion-margin-end">
+      <ion-button (click)="this.confirmarEliminarLibro()">
+        <ion-icon slot="icon-only" name="trash-outline" size="large" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
@@ -50,10 +57,6 @@
     <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="addBookForm.invalid"
       class="ion-margin">
       {{this.libro ? 'actualizar' : 'añadir'}}
-    </ion-button>
-
-    <ion-button (click)="this.confirmarEliminarLibro()" expand="full" fill="solid" shape="round" class="ion-margin" *ngIf="this.libro" color="danger">
-      eliminar
     </ion-button>
   </form>
 

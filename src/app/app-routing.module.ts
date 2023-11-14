@@ -37,6 +37,21 @@ const routes: Routes = [
     loadChildren: () => import('./pages/recuperar-pwd/recuperar-pwd.module').then( m => m.RecuperarPwdPageModule)
   },
   {
+    path: 'ver-prestamos-pendientes',
+    loadChildren: () => import('./pages/ver-prestamos-pendientes/ver-prestamos-pendientes.module').then( m => m.VerPrestamosPendientesPageModule),
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
+    path: 'anadir-actualizar-prestamo',
+    loadChildren: () => import('./pages/anadir-actualizar-prestamo/anadir-actualizar-prestamo.module').then( m => m.AnadirActualizarPrestamoPageModule),
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
+    path: 'historial-prestamos',
+    loadChildren: () => import('./pages/historial-prestamos/historial-prestamos.module').then( m => m.HistorialPrestamosPageModule),
+    ...canActivate(redirectUnauthorizedToLogin),
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
