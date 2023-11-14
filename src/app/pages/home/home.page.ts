@@ -32,11 +32,6 @@ export class HomePage implements OnInit {
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
   ) {
-    this.ordenarLibrosAlfabeticamente(this.libros);
-  }
-
-  ngOnInit(): void {
-
     this.libroService.getLibros(this.path).subscribe(res => {
       this.libros = res;
       this.librosLeidos = res.filter(lib => lib.leido);
@@ -47,6 +42,8 @@ export class HomePage implements OnInit {
       this.ordenarLibrosAlfabeticamente(this.librosPendientes);
     });
   }
+
+  ngOnInit(): void {}
 
   ordenarLibrosAlfabeticamente(libros: Libro[]) {
     libros = libros.sort((a, b) => {
@@ -74,7 +71,8 @@ export class HomePage implements OnInit {
 
       if (result.isConfirmed) {
         this.authService.logout().then(() => {
-          this.router.navigate(['']);
+          // this.router.navigate(['']);
+          this.router.navigateByUrl('', {replaceUrl : true});
         });
       }
 
