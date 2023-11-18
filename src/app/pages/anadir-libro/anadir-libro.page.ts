@@ -48,6 +48,12 @@ export class AnadirLibroPage implements OnInit {
 
   async createLibro() {
     let path = `usuarios/${this.authService.currentUser.uid}/libros`;
+
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular'
+    });
+    await loading.present();
+
     if(this.addBookForm.controls['imagen'].value){
       // subir la imagen y obtener la url
       let dataUrl = this.addBookForm.value['imagen'];
@@ -55,8 +61,6 @@ export class AnadirLibroPage implements OnInit {
       let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
       this.addBookForm.controls['imagen'].setValue(imagenUrl);
     }
-
-
 
     this.libroService.anadirLibro(this.addBookForm.value, path).then(() => {
       const exitoToast = Swal.mixin({
@@ -67,6 +71,8 @@ export class AnadirLibroPage implements OnInit {
         timerProgressBar: true,
       });
 
+      loading.dismiss();
+
       exitoToast.fire({
         icon: 'success',
         title: '¡Nuevo libro en tu biblioteca!',
@@ -74,6 +80,7 @@ export class AnadirLibroPage implements OnInit {
 
       this.router.navigate(['/home']);
     }).catch(() => {
+      loading.dismiss();
       console.log('error al añadir un libro');
     });
   }
@@ -119,8 +126,10 @@ export class AnadirLibroPage implements OnInit {
   async deleteLibro() {
     let path = `usuarios/${this.authService.currentUser.uid}/libros/${this.libro.doc}`;
 
-    let imagenPath = await this.libroService.getFilePath(this.libro.imagen);
-    await this.libroService.deleteFile(imagenPath);
+    if(this.libro.imagen){
+      let imagenPath = await this.libroService.getFilePath(this.libro.imagen);
+      await this.libroService.deleteFile(imagenPath);
+    }
 
     this.libroService.deleteLibro(path).then(() => {
       this.modalCtrl.dismiss();
