@@ -126,12 +126,20 @@ export class AnadirLibroPage implements OnInit {
   async deleteLibro() {
     let path = `usuarios/${this.authService.currentUser.uid}/libros/${this.libro.doc}`;
 
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular'
+    });
+    await loading.present();
+
     if(this.libro.imagen){
       let imagenPath = await this.libroService.getFilePath(this.libro.imagen);
       await this.libroService.deleteFile(imagenPath);
     }
 
+
+
     this.libroService.deleteLibro(path).then(() => {
+      loading.dismiss();
       this.modalCtrl.dismiss();
 
       const exitoToast = Swal.mixin({
@@ -141,7 +149,6 @@ export class AnadirLibroPage implements OnInit {
         timer: 1500,
         timerProgressBar: true,
       });
-
       exitoToast.fire({
         icon: 'success',
         title: 'Libro eliminado exitosamente',
