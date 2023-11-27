@@ -39,7 +39,8 @@ export class RegistroPage implements OnInit {
 
   async onSubmit() {
     const loading = await this.loadingCtrl.create({
-      spinner: 'circular'
+      spinner: 'circular',
+      mode: 'ios'
     });
     await loading.present();
 

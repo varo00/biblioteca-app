@@ -50,7 +50,8 @@ export class AnadirLibroPage implements OnInit {
     let path = `usuarios/${this.authService.currentUser.uid}/libros`;
 
     const loading = await this.loadingCtrl.create({
-      spinner: 'circular'
+      spinner: 'circular',
+      mode: 'ios'
     });
     await loading.present();
 
@@ -97,7 +98,8 @@ export class AnadirLibroPage implements OnInit {
     }
 
     const loading = await this.loadingCtrl.create({
-      spinner: 'circular'
+      spinner: 'circular',
+      mode: 'ios',
     });
     await loading.present();
 
@@ -127,7 +129,8 @@ export class AnadirLibroPage implements OnInit {
     let path = `usuarios/${this.authService.currentUser.uid}/libros/${this.libro.doc}`;
 
     const loading = await this.loadingCtrl.create({
-      spinner: 'circular'
+      spinner: 'circular',
+      mode: 'ios'
     });
     await loading.present();
 

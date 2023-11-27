@@ -12,15 +12,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  usuario : Usuario;
+  usuario: Usuario;
 
   constructor(
-    private usuarioSvc : UsuarioService,
-    private authSvc : AuthService,
-    private router : Router,
-    private loadingCtrl : LoadingController,
+    private usuarioSvc: UsuarioService,
+    private authSvc: AuthService,
+    private router: Router,
+    private loadingCtrl: LoadingController,
   ) {
-    this.usuarioSvc.getUsuarioById(this.authSvc.currentUser.uid).subscribe( res => {
+    this.usuarioSvc.getUsuarioById(this.authSvc.currentUser.uid).subscribe(res => {
       this.usuario = res;
     });
   }
@@ -28,7 +28,7 @@ export class PerfilPage implements OnInit {
   ngOnInit() {
   }
 
-  actualizarUsuario(){
+  actualizarUsuario() {
 
   }
 
@@ -40,14 +40,16 @@ export class PerfilPage implements OnInit {
     const dataUrl = (await this.usuarioSvc.tomarFotoPerfil()).dataUrl;
 
     const loading = await this.loadingCtrl.create({
-      spinner: 'circular'
+      spinner: 'circular',
+      mode: 'ios'
     });
+
     await loading.present();
 
     let imagenPath = `${user.doc}/perfil`;
     user.imagen = await this.usuarioSvc.subirFotoPerfil(imagenPath, dataUrl);
 
-    this.usuarioSvc.updateUsuario(path, {imagen : user.imagen}).then(async res => {
+    this.usuarioSvc.updateUsuario(path, { imagen: user.imagen }).then(async res => {
       const exitoToast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -67,18 +69,19 @@ export class PerfilPage implements OnInit {
     });
   }
 
-  cambiarPwd(){
+  cambiarPwd() {
+
     const toast = Swal.mixin({
       toast: true,
       position: 'top',
+      showConfirmButton: false,
       timer: 2000,
-      timerProgressBar: true,
+      timerProgressBar: true
     });
 
     this.authSvc.restablecerContrasena(this.authSvc.currentUser.email).then(() => {
-      this.authSvc.logout().then( () => {
+      this.authSvc.logout().then(() => {
         this.router.navigate(['']);
-        
         toast.fire({
           icon: 'success',
           title: '¡Correo enviado con éxito!',
