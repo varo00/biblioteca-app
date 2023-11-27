@@ -3,9 +3,7 @@ import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, docData,
 import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/libro';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from 'firebase/storage';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,6 @@ export class LibrosService {
 
   constructor(
     private firestore: Firestore,
-    private authSvc  : AuthService,
   ) { }
 
   getLibros(path:string): Observable<Libro[]> {
