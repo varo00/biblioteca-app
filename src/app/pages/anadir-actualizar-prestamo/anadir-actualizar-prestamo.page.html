@@ -1,13 +1,58 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>anadir-actualizar-prestamo</ion-title>
+    <ion-title>Crear Préstamo</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/ver-prestamos-pendientes"></ion-back-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">anadir-actualizar-prestamo</ion-title>
+      <ion-title size="large">Crear Préstamo</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <form [formGroup]="prestamoForm" (ngSubmit)="onSubmit()" class="ion-text-center ion-padding">
+    <ion-item id="open-modal" class="ion-margin">
+      <ion-icon slot="start" name="calendar-outline" size="large" color="tertiary"></ion-icon>
+      <ion-label>Selecciona Fecha</ion-label>
+      <ion-text>{{formattedString}}</ion-text>
+    </ion-item>
+    <ion-modal trigger="open-modal" backdropDismiss="true">
+      <ng-template>
+        <ion-content>
+          <ion-datetime locale="es-ES" firstDayOfWeek="1" presentation="date" mode="ios" color="tertiary" [value]="dateValue" #datetime
+            (ionChange)="dateChanged(datetime.value)" (ionCancel)="showPicker = false" showDefaultButtons="true"
+            size="cover">
+
+            <ion-buttons slot="buttons">
+              <ion-button (click)="close()">Cancelar</ion-button>
+              <ion-button (click)="select()" color="primary">Seleccionar</ion-button>
+            </ion-buttons>
+
+          </ion-datetime>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <ion-item class="ion-margin">
+      <ion-select interface="alert" mode="ios" placeholder="Elige Libro" formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false">
+        <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+    <ion-item class="ion-margin">
+      <ion-label position="floating">Prestado a</ion-label>
+      <ion-input type="text" autocapitalize="true" formControlName="prestado_a"></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="prestamoForm.invalid"
+      class="ion-margin">
+      Crear préstamo
+    </ion-button>
+  </form>
 </ion-content>

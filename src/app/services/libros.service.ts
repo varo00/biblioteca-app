@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Libro } from '../interfaces/libro';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from 'firebase/storage';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,16 @@ export class LibrosService {
 
   constructor(
     private firestore: Firestore,
+    private authSvc: AuthService
   ) { }
 
-  getLibros(path:string): Observable<Libro[]> {
+  getLibros(path: string): Observable<Libro[]> {
     const ref = collection(this.firestore, path);
-    return collectionData(ref, {idField: 'doc'}) as Observable<Libro[]>;
+    return collectionData(ref, { idField: 'doc' }) as Observable<Libro[]>;
   }
 
   getLibroById(id: string): Observable<Libro> {
-    const libroDocRef = doc(this.firestore, `libros/${id}`);
+    const libroDocRef = doc(this.firestore, `usuarios/${this.authSvc.currentUser.uid}/libros/${id}`);
     return docData(libroDocRef, { idField: 'doc' }) as Observable<Libro>;
   }
 
@@ -31,8 +33,8 @@ export class LibrosService {
   deleteLibro(path) {
     return deleteDoc(doc(getFirestore(), path));
   }
-  
-  updateLibro(path, data){
+
+  updateLibro(path, data) {
     return updateDoc(doc(getFirestore(), path), data);
   }
 
@@ -54,11 +56,11 @@ export class LibrosService {
     });
   }
 
-  async getFilePath(url : string){
+  async getFilePath(url: string) {
     return ref(getStorage(), url).fullPath;
   }
 
-  deleteFile(path){
+  deleteFile(path) {
     return deleteObject(ref(getStorage(), path));
   }
 

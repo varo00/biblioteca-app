@@ -13,7 +13,7 @@ import { VerPrestamosPendientesPage } from './ver-prestamos-pendientes.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    VerPrestamosPendientesPageRoutingModule
+    VerPrestamosPendientesPageRoutingModule,
   ],
   declarations: [VerPrestamosPendientesPage]
 })

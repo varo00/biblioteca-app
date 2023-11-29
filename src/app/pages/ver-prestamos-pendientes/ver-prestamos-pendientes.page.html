@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Préstamos Pendientes</ion-title>
+    <ion-title>Préstamos</ion-title>
     
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
@@ -12,7 +12,20 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Préstamos Pendientes</ion-title>
+      <ion-title size="large">Préstamos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list *ngIf="this.prestamos?.length !== 0">
+    <ion-item *ngFor="let p of prestamos">
+      <ion-label>{{p.fecha | date}}</ion-label>
+      <ion-label>{{p.libro}}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" class="ion-margin" slot="fixed">
+    <ion-fab-button [routerLink]="['/anadir-actualizar-prestamo']" color="tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

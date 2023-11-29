@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +13,8 @@ import { AnadirActualizarPrestamoPage } from './anadir-actualizar-prestamo.page'
     CommonModule,
     FormsModule,
     IonicModule,
-    AnadirActualizarPrestamoPageRoutingModule
+    AnadirActualizarPrestamoPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [AnadirActualizarPrestamoPage]
 })

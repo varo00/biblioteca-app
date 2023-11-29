@@ -35,6 +35,7 @@ export class AnadirLibroPage implements OnInit {
       comentario: [''],
       leido: [false, [Validators.required]],
       imagen: [''],
+      prestado: [false, [Validators.required]]
     });
 
     if (this.libro) {
