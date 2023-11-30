@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Libro } from 'src/app/interfaces/libro';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonItemOptions, IonItemSliding, LoadingController } from '@ionic/angular';
 import { Prestamo } from 'src/app/interfaces/prestamo';
 import { AuthService } from 'src/app/services/auth.service';
 import { LibrosService } from 'src/app/services/libros.service';
 import { PrestamoService } from 'src/app/services/prestamo.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ver-prestamos-pendientes',
@@ -12,6 +12,7 @@ import { PrestamoService } from 'src/app/services/prestamo.service';
   styleUrls: ['./ver-prestamos-pendientes.page.scss'],
 })
 export class VerPrestamosPendientesPage implements OnInit {
+  @ViewChild(IonItemSliding) devolver !: IonItemSliding;
 
   prestamos : Prestamo[];
 
@@ -19,6 +20,7 @@ export class VerPrestamosPendientesPage implements OnInit {
     private prestamoSvc : PrestamoService,
     private authSvc : AuthService,
     private libroSvc : LibrosService,
+    private loadingCtrl : LoadingController,
   ) {
     this.prestamoSvc.getPrestamos(`usuarios/${this.authSvc.currentUser.uid}/prestamos`).subscribe(res => {
       this.prestamos = res;
@@ -28,4 +30,69 @@ export class VerPrestamosPendientesPage implements OnInit {
   ngOnInit() {
   }
 
+  marcarDevuelto(){
+    Swal.fire({
+      title: '¿Marcar préstamo como devuelto?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'Cancelar',
+      heightAuto: false,
+      backdrop: false,
+    }).then((result) => {
+      //marcar prestamo como devuelto
+      if(result.isConfirmed){
+        console.log('marcado devuelto');
+      }
+    }).catch(err => {
+      console.log(err);
+    }).finally(() => { 
+      this.devolver.closeOpened()
+    });
+  }
+
+  async eliminarPrestamo(p:Prestamo){
+    const exitoToast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
+
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular',
+      mode: 'ios'
+    });
+
+    await loading.present();
+
+    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, {prestado:false}).then(() => {
+      this.prestamoSvc.deletePrestamo(`usuarios/${this.authSvc.currentUser.uid}/prestamos/${p.doc}`).then(() => {
+
+        exitoToast.fire({
+          icon: 'success',
+          title: '¡Préstamo eliminado con éxito!',
+        });
+
+        loading.dismiss();
+      });
+    });
+  }
+
+  async confirmarEliminarPrestamo(p:Prestamo){
+    Swal.fire({
+      title: 'Quieres eliminar este préstamo?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      heightAuto: false,
+      backdrop: false,
+    }).then((result) => {
+      if(result.isConfirmed){
+        this.eliminarPrestamo(p);
+      }
+    });
+  }
 }

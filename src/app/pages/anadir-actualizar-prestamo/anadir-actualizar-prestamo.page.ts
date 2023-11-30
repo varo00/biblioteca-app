@@ -19,6 +19,7 @@ export class AnadirActualizarPrestamoPage implements OnInit {
 
   showPicker = false;
   dateValue;
+  hoy;
   formattedString = '';
 
   libros: Libro[]
@@ -34,6 +35,7 @@ export class AnadirActualizarPrestamoPage implements OnInit {
     private router: Router,
   ) {
     this.dateValue = format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z';
+    this.hoy = format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z';
     this.setToday();
 
     this.libroSvc.getLibros(`usuarios/${this.authSvc.currentUser.uid}/libros`).subscribe(async res => {

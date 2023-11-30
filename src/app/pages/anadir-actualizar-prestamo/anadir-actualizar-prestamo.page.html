@@ -27,7 +27,7 @@
         <ion-content>
           <ion-datetime locale="es-ES" firstDayOfWeek="1" presentation="date" mode="ios" color="tertiary" [value]="dateValue" #datetime
             (ionChange)="dateChanged(datetime.value)" (ionCancel)="showPicker = false" showDefaultButtons="true"
-            size="cover">
+            size="cover" [max]="this.hoy">
 
             <ion-buttons slot="buttons">
               <ion-button (click)="close()">Cancelar</ion-button>
@@ -41,7 +41,7 @@
 
     <ion-item class="ion-margin">
       <ion-select interface="alert" [interfaceOptions]="{backdropDismiss:false}" mode="ios" placeholder="Elige Libro" formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false" (ionChange)="obtenerTitulo()">
-        <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo}}</ion-select-option>
+        <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo | uppercase}}</ion-select-option>
       </ion-select>
     </ion-item>
   

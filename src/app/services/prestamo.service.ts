@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData} from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, getFirestore} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Prestamo } from '../interfaces/prestamo';
 
@@ -19,6 +19,10 @@ export class PrestamoService {
 
   anadirPrestamo(path, prestamo : Prestamo) {
     return addDoc(collection(this.firestore, path), prestamo);
+  }
+
+  deletePrestamo(path) {
+    return deleteDoc(doc(getFirestore(), path));
   }
 
 }
