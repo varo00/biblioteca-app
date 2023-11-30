@@ -51,7 +51,7 @@
 
     <ion-item class="ion-margin">
       <ion-label position="floating">Comentario</ion-label>
-      <ion-textarea formControlName="comentario"></ion-textarea>
+      <ion-textarea formControlName="comentario" [autoGrow]="true" [shape]="'round'"></ion-textarea>
     </ion-item>
 
     <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="addBookForm.invalid"
