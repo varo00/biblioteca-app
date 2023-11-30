@@ -76,8 +76,9 @@ export class VerPrestamosPendientesPage implements OnInit {
         });
 
         loading.dismiss();
-      });
+      })
     });
+
   }
 
   async confirmarEliminarPrestamo(p:Prestamo){
@@ -92,6 +93,8 @@ export class VerPrestamosPendientesPage implements OnInit {
     }).then((result) => {
       if(result.isConfirmed){
         this.eliminarPrestamo(p);
+      }else{
+        this.devolver.closeOpened();
       }
     });
   }
