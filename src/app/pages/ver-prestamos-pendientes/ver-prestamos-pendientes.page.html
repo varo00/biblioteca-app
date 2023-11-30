@@ -19,7 +19,7 @@
   <ion-list *ngIf="this.prestamos?.length !== 0">
     <ion-item *ngFor="let p of prestamos">
       <ion-label>{{p.fecha | date}}</ion-label>
-      <ion-label>{{p.libro}}</ion-label>
+      <ion-label>{{p.titulo | uppercase}}</ion-label>
     </ion-item>
   </ion-list>
 

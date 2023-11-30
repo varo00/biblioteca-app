@@ -46,6 +46,7 @@ export class AnadirActualizarPrestamoPage implements OnInit {
       fecha: [this.dateValue, [Validators.required]],
       libro: ['', [Validators.required]],
       prestado_a: ['', [Validators.required]],
+      titulo: ['', [Validators.required]],
     });
   }
 
@@ -68,6 +69,12 @@ export class AnadirActualizarPrestamoPage implements OnInit {
     this.datetime.confirm(true);
   }
 
+  obtenerTitulo(){
+    this.libroSvc.getLibroById(this.prestamoForm.get('libro').value).subscribe( res => {
+      this.prestamoForm.get('titulo').setValue(res.titulo);
+    });
+  }
+
   async onSubmit() {
 
     const loading = await this.loadingCtrl.create({
@@ -76,6 +83,8 @@ export class AnadirActualizarPrestamoPage implements OnInit {
     });
 
     await loading.present();
+
+
 
     this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${this.prestamoForm.get('libro').value}`, { prestado: true }).then(() => {
       this.prestamoSvc.anadirPrestamo(`usuarios/${this.authSvc.currentUser.uid}/prestamos`, this.prestamoForm.value).then(() => {

@@ -40,7 +40,7 @@
     </ion-modal>
 
     <ion-item class="ion-margin">
-      <ion-select interface="alert" mode="ios" placeholder="Elige Libro" formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false">
+      <ion-select interface="alert" [interfaceOptions]="{backdropDismiss:false}" mode="ios" placeholder="Elige Libro" formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false" (ionChange)="obtenerTitulo()">
         <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo}}</ion-select-option>
       </ion-select>
     </ion-item>
