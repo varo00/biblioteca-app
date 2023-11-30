@@ -164,19 +164,34 @@ export class AnadirLibroPage implements OnInit {
   }
 
   async confirmarEliminarLibro(){
-    Swal.fire({
-      title: 'Quieres eliminar este libro?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar',
-      heightAuto: false,
-      backdrop: false,
-    }).then((result) => {
-      if(result.isConfirmed){
-        this.deleteLibro();
-      }
-    });
+    if(!this.libro.prestado){
+      Swal.fire({
+        title: 'Quieres eliminar este libro?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        heightAuto: false,
+        backdrop: false,
+      }).then((result) => {
+        if(result.isConfirmed){
+          this.deleteLibro();
+        }
+      });
+    }else{
+      const prestadoToast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      prestadoToast.fire({
+        icon: 'error',
+        title: 'Este libro está actualmente en préstamo',
+      });
+      this.modalCtrl.dismiss();
+    }
   }
 
   async takeImage() {
