@@ -48,7 +48,10 @@ export class UsuarioService {
     return await Camera.getPhoto({
       quality: 90,
       resultType: CameraResultType.DataUrl,
-      source: CameraSource.Camera,
+      source: CameraSource.Prompt,
+      promptLabelHeader: 'Perfil',
+      promptLabelPhoto: 'Selecciona una imagen',
+      promptLabelPicture: 'Toma una foto',
     });
   }
 
