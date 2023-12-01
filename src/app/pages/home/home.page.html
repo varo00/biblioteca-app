@@ -60,8 +60,8 @@
   </div>
   <ng-template #elseBlock1 class="ion-margin-vertical ion-margin-start">
     <ion-card>
-      <ion-card-header>
-        <ion-title>No tienes libros en tu biblioteca</ion-title>
+      <ion-card-header class="ion-text-wrap">
+        <ion-card-title>No tienes libros en tu biblioteca</ion-card-title>
       </ion-card-header>
     </ion-card>
   </ng-template>
@@ -85,9 +85,9 @@
   </div>
   <ng-template #elseBlock2 class="ion-margin-vertical ion-margin-start">
     <ion-card>
-      <ion-card-header>
-        <ion-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-title>
-        <ion-title *ngIf="this.libros.length !== 0">Aún no has leido ningún libro</ion-title>
+      <ion-card-header class="ion-text-wrap">
+        <ion-card-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-card-title>
+        <ion-card-title *ngIf="this.libros.length !== 0">Aún no has leido ningún libro</ion-card-title>
       </ion-card-header>
     </ion-card>
   </ng-template>
@@ -110,9 +110,9 @@
   </div>
   <ng-template #elseBlock3 class="ion-margin-vertical ion-margin-start">
     <ion-card>
-      <ion-card-header>
-        <ion-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-title>
-        <ion-title *ngIf="this.libros.length !== 0">Has leído toda tu biblioteca</ion-title>
+      <ion-card-header class="ion-text-wrap">
+        <ion-card-title *ngIf="this.libros.length === 0">No tienes libros en tu biblioteca</ion-card-title>
+        <ion-card-title *ngIf="this.libros.length !== 0">Has leído toda tu biblioteca</ion-card-title>
       </ion-card-header>
     </ion-card>
   </ng-template>
