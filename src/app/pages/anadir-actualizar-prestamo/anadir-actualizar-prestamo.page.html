@@ -44,14 +44,16 @@
         <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo | uppercase}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <ion-note *ngIf="libros?.length === 0" color="warning" mode="ios">
+      Todos tus libros están prestados
+    </ion-note>
   
     <ion-item class="ion-margin">
       <ion-label position="floating">Prestado a</ion-label>
       <ion-input type="text" autocapitalize="true" formControlName="prestado_a"></ion-input>
     </ion-item>
 
-    <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="prestamoForm.invalid"
-      class="ion-margin">
+    <ion-button expand="full" fill="solid" shape="round" type="submit" [disabled]="prestamoForm.invalid" class="ion-margin">
       Crear préstamo
     </ion-button>
   </form>

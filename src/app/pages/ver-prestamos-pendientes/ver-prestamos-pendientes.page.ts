@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonItemOptions, IonItemSliding, LoadingController } from '@ionic/angular';
+import { format } from 'date-fns';
 import { Prestamo } from 'src/app/interfaces/prestamo';
 import { AuthService } from 'src/app/services/auth.service';
 import { LibrosService } from 'src/app/services/libros.service';
@@ -30,8 +31,8 @@ export class VerPrestamosPendientesPage implements OnInit {
   ngOnInit() {
   }
 
-  marcarDevuelto(){
-    Swal.fire({
+  async marcarDevuelto(p:Prestamo){
+    await Swal.fire({
       title: '¿Marcar préstamo como devuelto?',
       icon: 'question',
       showCancelButton: true,
@@ -42,13 +43,34 @@ export class VerPrestamosPendientesPage implements OnInit {
     }).then((result) => {
       //marcar prestamo como devuelto
       if(result.isConfirmed){
-        console.log('marcado devuelto');
+        this.devolverPrestamo(p);
       }
     }).catch(err => {
       console.log(err);
     }).finally(() => { 
       this.devolver.closeOpened()
     });
+  }
+
+  async devolverPrestamo(p:Prestamo){
+    let hisPrest;
+
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular',
+      mode: 'ios'
+    });
+    await loading.present();
+
+    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, {prestado:false}).then(() => {
+      hisPrest = {libro:p.titulo, prestado_a:p.prestado_a, devuelto:format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z'}
+
+      this.prestamoSvc.devolverPrestamo(`usuarios/${this.authSvc.currentUser.uid}/historialPrestamos`,hisPrest).then(() => {
+        this.prestamoSvc.deletePrestamo(`usuarios/${this.authSvc.currentUser.uid}/prestamos/${p.doc}`);
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+
   }
 
   async eliminarPrestamo(p:Prestamo){
@@ -82,7 +104,7 @@ export class VerPrestamosPendientesPage implements OnInit {
   }
 
   async confirmarEliminarPrestamo(p:Prestamo){
-    Swal.fire({
+    await Swal.fire({
       title: 'Quieres eliminar este préstamo?',
       icon: 'warning',
       showCancelButton: true,

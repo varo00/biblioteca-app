@@ -24,12 +24,12 @@
           </ion-thumbnail>
           <ion-label>
             <h2><strong>Fecha:</strong> {{p.fecha | date}}</h2>
-            <h2><strong>Libro: </strong>{{p.titulo | uppercase}}</h2>
+            <h2 class="ion-text-capitalize ion-text-wrap"><strong>Libro: </strong>{{p.titulo}}</h2>
             <h2><strong>Prestado a: </strong>{{p.prestado_a}}</h2>
           </ion-label>
         </ion-item>
 
-        <ion-item-options side="start" (ionSwipe)="marcarDevuelto()">
+        <ion-item-options side="start" (ionSwipe)="marcarDevuelto(p)">
           <ion-item-option color="success">
             <ion-icon slot="icon-only" name="checkmark-done-outline"></ion-icon>
           </ion-item-option>

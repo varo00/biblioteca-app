@@ -17,12 +17,22 @@ export class PrestamoService {
     return collectionData(ref, {idField: 'doc'}) as Observable<Prestamo[]>;
   }
 
-  anadirPrestamo(path, prestamo : Prestamo) {
+  getHistorial(path:string): Observable<any[]>{
+    const ref = collection(this.firestore, path);
+    return collectionData(ref, {idField: 'doc'});
+  }
+
+  anadirPrestamo(path:string, prestamo : Prestamo) {
     return addDoc(collection(this.firestore, path), prestamo);
   }
 
-  deletePrestamo(path) {
+  deletePrestamo(path:string) {
     return deleteDoc(doc(getFirestore(), path));
+  }
+
+  //insertar historialPrestamo
+  devolverPrestamo(path:string, data:any){
+    return addDoc(collection(this.firestore, path), data);
   }
 
 }

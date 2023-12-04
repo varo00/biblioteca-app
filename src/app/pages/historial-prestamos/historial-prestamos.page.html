@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Historial de Préstamos</ion-title>
-    
+
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
@@ -15,4 +15,24 @@
       <ion-title size="large">Historial de Préstamos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list *ngIf="this.historial?.length !== 0; else elseBlock" [inset]="true" lines="inset" mode="ios">
+    <ion-item *ngFor="let p of historial">
+      <ion-icon name="checkmark-done-circle-outline" slot="start" size="large"></ion-icon>
+      <ion-label>
+        <h2><strong>Fecha Devolución:</strong> {{p.devuelto | date}}</h2>
+        <h2 class="ion-text-capitalize ion-text-wrap"><strong>Libro: </strong>{{p.libro}}</h2>
+        <h2 class="ion-text-capitalize"><strong>Prestado a: </strong>{{p.prestado_a}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ng-template #elseBlock class="ion-margin-vertical">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Nunca has prestado un libro
+        </ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </ng-template>
 </ion-content>

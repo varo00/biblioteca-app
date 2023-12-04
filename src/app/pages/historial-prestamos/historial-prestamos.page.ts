@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { PrestamoService } from 'src/app/services/prestamo.service';
 
 @Component({
   selector: 'app-historial-prestamos',
@@ -7,7 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialPrestamosPage implements OnInit {
 
-  constructor() { }
+  historial:any[];
+
+  constructor(
+    private authSvc : AuthService,
+    private prestamoSvc : PrestamoService,
+  ) {
+    this.prestamoSvc.getHistorial(`usuarios/${this.authSvc.currentUser.uid}/historialPrestamos`).subscribe( res => {
+      this.historial = res;
+    })
+  }
 
   ngOnInit() {
   }
