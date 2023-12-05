@@ -39,11 +39,13 @@
       <ion-label position="floating">Título <ion-text color="danger">*</ion-text></ion-label>
       <ion-input required formControlName="titulo" type="text"></ion-input>
     </ion-item>
+    <ion-note color="danger" *ngIf="((this.addBookForm.get('titulo').dirty || this.addBookForm.get('titulo').touched) && this.addBookForm.get('titulo').errors)">El título es obligatorio</ion-note>
 
     <ion-item class="ion-margin">
       <ion-label position="floating">Autor <ion-text color="danger">*</ion-text></ion-label>
       <ion-input required formControlName="autor" type="text"></ion-input>
     </ion-item>
+    <ion-note color="danger" *ngIf="((this.addBookForm.get('autor').dirty || this.addBookForm.get('autor').touched) && this.addBookForm.get('autor').errors)">El autor es obligatorio</ion-note>
 
     <ion-item class="ion-margin">
       <ion-checkbox formControlName="leido" labelPlacement="start" checked="false">Leído</ion-checkbox>

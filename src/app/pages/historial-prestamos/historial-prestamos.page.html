@@ -24,13 +24,16 @@
         <h2 class="ion-text-capitalize ion-text-wrap"><strong>Libro: </strong>{{p.libro}}</h2>
         <h2 class="ion-text-capitalize"><strong>Prestado a: </strong>{{p.prestado_a}}</h2>
       </ion-label>
+      <ion-button (click)="confirmarEliminar(p)" fill="clear">
+        <ion-icon slot="icon-only" name="trash-outline" color="danger" (click)="confirmarEliminar(p)"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
   <ng-template #elseBlock class="ion-margin-vertical">
     <ion-card>
       <ion-card-header>
         <ion-card-title>
-          Nunca has prestado un libro
+          Tu historial de préstamos está vacío
         </ion-card-title>
       </ion-card-header>
     </ion-card>

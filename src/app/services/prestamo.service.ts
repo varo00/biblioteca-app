@@ -30,9 +30,12 @@ export class PrestamoService {
     return deleteDoc(doc(getFirestore(), path));
   }
 
-  //insertar historialPrestamo
   devolverPrestamo(path:string, data:any){
     return addDoc(collection(this.firestore, path), data);
+  }
+
+  deleteRegistroHistorial(path:string){
+    return deleteDoc(doc(getFirestore(), path));
   }
 
 }
