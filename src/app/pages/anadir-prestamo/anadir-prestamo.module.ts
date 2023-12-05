@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AnadirActualizarPrestamoPageRoutingModule } from './anadir-actualizar-prestamo-routing.module';
+import { AnadirActualizarPrestamoPageRoutingModule } from './anadir-prestamo-routing.module';
 
-import { AnadirActualizarPrestamoPage } from './anadir-actualizar-prestamo.page';
+import { AnadirActualizarPrestamoPage } from './anadir-prestamo.page';
 
 @NgModule({
   imports: [

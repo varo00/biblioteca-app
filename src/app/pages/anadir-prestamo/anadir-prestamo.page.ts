@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonDatetime, LoadingController, PickerController } from '@ionic/angular';
+import { IonDatetime, LoadingController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 import { Libro } from 'src/app/interfaces/libro';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,8 +11,8 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-anadir-actualizar-prestamo',
-  templateUrl: './anadir-actualizar-prestamo.page.html',
-  styleUrls: ['./anadir-actualizar-prestamo.page.scss'],
+  templateUrl: './anadir-prestamo.page.html',
+  styleUrls: ['./anadir-prestamo.page.scss'],
 })
 export class AnadirActualizarPrestamoPage implements OnInit {
   @ViewChild(IonDatetime) datetime!: IonDatetime;

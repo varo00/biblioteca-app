@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: 'anadir-actualizar-prestamo',
-    loadChildren: () => import('./pages/anadir-actualizar-prestamo/anadir-actualizar-prestamo.module').then( m => m.AnadirActualizarPrestamoPageModule),
+    loadChildren: () => import('./pages/anadir-prestamo/anadir-prestamo.module').then( m => m.AnadirActualizarPrestamoPageModule),
     ...canActivate(redirectUnauthorizedToLogin),
   },
   {

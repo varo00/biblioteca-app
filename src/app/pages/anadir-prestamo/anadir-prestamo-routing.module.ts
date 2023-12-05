@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AnadirActualizarPrestamoPage } from './anadir-actualizar-prestamo.page';
+import { AnadirActualizarPrestamoPage } from './anadir-prestamo.page';
 
 const routes: Routes = [
   {
