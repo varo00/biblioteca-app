@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonItemOptions, IonItemSliding, LoadingController } from '@ionic/angular';
+import { IonItemOptions, IonItemSliding, LoadingController, ModalController } from '@ionic/angular';
 import { format } from 'date-fns';
+import { ActualizarPrestamoComponent } from 'src/app/components/actualizar-prestamo/actualizar-prestamo.component';
 import { Prestamo } from 'src/app/interfaces/prestamo';
 import { AuthService } from 'src/app/services/auth.service';
 import { LibrosService } from 'src/app/services/libros.service';
@@ -22,6 +23,7 @@ export class VerPrestamosPendientesPage implements OnInit {
     private authSvc : AuthService,
     private libroSvc : LibrosService,
     private loadingCtrl : LoadingController,
+    private modalCtrl : ModalController
   ) {
     this.prestamoSvc.getPrestamos(`usuarios/${this.authSvc.currentUser.uid}/prestamos`).subscribe(res => {
       this.prestamos = res;
@@ -119,5 +121,17 @@ export class VerPrestamosPendientesPage implements OnInit {
         this.devolver.closeOpened();
       }
     });
+  }
+
+  async abrirPrestamo(prestamo:Prestamo) {
+    const modal = await this.modalCtrl.create({
+      component: ActualizarPrestamoComponent,
+      componentProps: { prestamo : prestamo },
+      breakpoints: [0, 0.5, 0.8, 1],
+      initialBreakpoint: 0.8,
+      backdropDismiss: true,
+    });
+
+    modal.present();
   }
 }

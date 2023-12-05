@@ -18,7 +18,7 @@
 
   <ion-list *ngIf="this.prestamos?.length !== 0; else elseBlock">
       <ion-item-sliding *ngFor="let p of prestamos" #devolver class="ion-margin-vertical">
-        <ion-item>
+        <ion-item (click)="this.abrirPrestamo(p)">
           <ion-thumbnail class="ion-margin-end">
             <img src="../../../assets/images/prestamo.png"/>
           </ion-thumbnail>
