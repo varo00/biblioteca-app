@@ -69,7 +69,7 @@ export class PerfilPage implements OnInit {
     });
   }
 
-  cambiarPwd() {
+  async cambiarPwd() {
 
     const toast = Swal.mixin({
       toast: true,
@@ -79,8 +79,16 @@ export class PerfilPage implements OnInit {
       timerProgressBar: true
     });
 
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular',
+      mode: 'ios'
+    });
+
+    await loading.present();
+
     this.authSvc.restablecerContrasena(this.authSvc.currentUser.email).then(() => {
       this.authSvc.logout().then(() => {
+        loading.dismiss();
         this.router.navigate(['']);
         toast.fire({
           icon: 'success',

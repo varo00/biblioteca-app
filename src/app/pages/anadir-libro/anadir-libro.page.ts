@@ -16,6 +16,8 @@ export class AnadirLibroPage implements OnInit {
 
   @Input() libro: Libro;
 
+  libros: Libro[];
+
   addBookForm: FormGroup;
 
   constructor(
@@ -24,8 +26,12 @@ export class AnadirLibroPage implements OnInit {
     private libroService: LibrosService,
     private router: Router,
     private modalCtrl: ModalController,
-    private loadingCtrl : LoadingController,
-  ) { }
+    private loadingCtrl: LoadingController,
+  ) {
+    this.libroService.getLibros(`usuarios/${this.authService.currentUser.uid}/libros`).subscribe(async res => {
+      this.libros = res;
+    });
+  }
 
   ngOnInit() {
 
@@ -44,7 +50,27 @@ export class AnadirLibroPage implements OnInit {
   }
 
   async onSubmit() {
-    this.libro ? this.updateLibro() : this.createLibro();
+    let valido = this.compruebaLibro();
+
+    if (this.libro) {
+      this.updateLibro();
+    } else if (valido.length === 0) {
+      this.createLibro();
+    } else {
+      const errorToast = Swal.mixin({
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+      errorToast.fire({
+        icon: 'error',
+        title: 'Ya existe ese libro en tu biblioteca',
+      });
+    }
+
   }
 
   async createLibro() {
@@ -56,7 +82,7 @@ export class AnadirLibroPage implements OnInit {
     });
     await loading.present();
 
-    if(this.addBookForm.controls['imagen'].value){
+    if (this.addBookForm.controls['imagen'].value) {
       // subir la imagen y obtener la url
       let dataUrl = this.addBookForm.value['imagen'];
       let imagenPath = `${this.authService.currentUser.uid}/libros/${Date.now()}`;
@@ -135,7 +161,7 @@ export class AnadirLibroPage implements OnInit {
     });
     await loading.present();
 
-    if(this.libro.imagen){
+    if (this.libro.imagen) {
       let imagenPath = await this.libroService.getFilePath(this.libro.imagen);
       await this.libroService.deleteFile(imagenPath);
     }
@@ -163,8 +189,8 @@ export class AnadirLibroPage implements OnInit {
     });
   }
 
-  async confirmarEliminarLibro(){
-    if(!this.libro.prestado){
+  async confirmarEliminarLibro() {
+    if (!this.libro.prestado) {
       Swal.fire({
         title: 'Quieres eliminar este libro?',
         icon: 'warning',
@@ -174,11 +200,11 @@ export class AnadirLibroPage implements OnInit {
         heightAuto: false,
         backdrop: false,
       }).then((result) => {
-        if(result.isConfirmed){
+        if (result.isConfirmed) {
           this.deleteLibro();
         }
       });
-    }else{
+    } else {
       const prestadoToast = Swal.mixin({
         toast: true,
         position: 'center',
@@ -197,6 +223,15 @@ export class AnadirLibroPage implements OnInit {
   async takeImage() {
     const dataUrl = (await this.libroService.takePicture()).dataUrl;
     this.addBookForm.controls['imagen'].setValue(dataUrl);
+  }
+
+  compruebaLibro() {
+    let tit: string = this.addBookForm.controls['titulo'].value;
+    let aut: string = this.addBookForm.controls['autor'].value;
+
+    return this.libros.filter(lib => {
+      return lib.titulo.toLowerCase().trim() === tit.toLowerCase().trim() && lib.autor.toLowerCase().trim() === aut.toLowerCase().trim();
+    });
   }
 
 }
