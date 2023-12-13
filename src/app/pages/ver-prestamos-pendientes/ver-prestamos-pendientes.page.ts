@@ -132,6 +132,8 @@ export class VerPrestamosPendientesPage implements OnInit {
       backdropDismiss: true,
     });
 
-    modal.present();
+    modal.present().then(() => {
+      this.devolver.closeOpened();
+    });
   }
 }

@@ -12,10 +12,13 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { PipesModule } from './pipes/pipes.module';
+import { ActualizarPrestamoComponent } from './components/actualizar-prestamo/actualizar-prestamo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ActualizarPrestamoComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import { PipesModule } from './pipes/pipes.module';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     PipesModule,
+    ReactiveFormsModule
   ],
   providers: [
     { 
