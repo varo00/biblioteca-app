@@ -74,7 +74,7 @@
         <ion-img [src]="libro.imagen ? libro.imagen : '../../../assets/images/no-imagen.png'"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
-          <ion-card-title>{{libro.titulo}}</ion-card-title>
+          <ion-card-title>{{libro.titulo | uppercase}}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
@@ -99,7 +99,7 @@
         <ion-img [src]="libro.imagen ? libro.imagen : '../../../assets/images/no-imagen.png'"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{libro.autor}}</ion-card-subtitle>
-          <ion-card-title>{{libro.titulo}}</ion-card-title>
+          <ion-card-title>{{libro.titulo | uppercase}}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>

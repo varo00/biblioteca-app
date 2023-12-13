@@ -20,7 +20,7 @@
     <ion-item *ngFor="let p of historial">
       <ion-icon name="checkmark-done-circle-outline" slot="start" size="large"></ion-icon>
       <ion-label>
-        <h2><strong>Fecha Devolución:</strong> {{p.devuelto | date}}</h2>
+        <h2 class="ion-text-wrap"><strong>Fecha Devolución:</strong> {{p.devuelto | date}}</h2>
         <h2 class="ion-text-capitalize ion-text-wrap"><strong>Libro: </strong>{{p.libro}}</h2>
         <h2 class="ion-text-capitalize"><strong>Prestado a: </strong>{{p.prestado_a}}</h2>
       </ion-label>
