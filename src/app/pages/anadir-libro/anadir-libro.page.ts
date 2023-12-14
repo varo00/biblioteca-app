@@ -116,6 +116,12 @@ export class AnadirLibroPage implements OnInit {
   async updateLibro() {
     let path = `usuarios/${this.authService.currentUser.uid}/libros/${this.libro.doc}`;
 
+    const loading = await this.loadingCtrl.create({
+      spinner: 'circular',
+      mode: 'ios',
+    });
+    await loading.present();
+
     if (this.addBookForm.value['imagen'] !== this.libro.imagen) {
       // subir la imagen y obtener la url
       let dataUrl = this.addBookForm.value['imagen'];
@@ -123,12 +129,6 @@ export class AnadirLibroPage implements OnInit {
       let imagenUrl = await this.libroService.uploadImage(imagenPath, dataUrl);
       this.addBookForm.controls['imagen'].setValue(imagenUrl);
     }
-
-    const loading = await this.loadingCtrl.create({
-      spinner: 'circular',
-      mode: 'ios',
-    });
-    await loading.present();
 
 
     this.libroService.updateLibro(path, this.addBookForm.value).then(() => {

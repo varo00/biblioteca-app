@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import Swal from 'sweetalert2';
 import { LibrosService } from '../../services/libros.service';
 import { Libro } from '../../interfaces/libro';
-import { MenuController, ModalController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController } from '@ionic/angular';
 import { AnadirLibroPage } from '../anadir-libro/anadir-libro.page';
 
 @Component({
@@ -31,7 +31,18 @@ export class HomePage implements OnInit {
     private libroService: LibrosService,
     private modalCtrl: ModalController,
     private menuCtrl: MenuController,
+    private loadingCtrl : LoadingController,
   ) {
+    this.cargarDatos();
+  }
+
+  async cargarDatos(){
+    const loading = await this.loadingCtrl.create({
+      spinner: 'crescent',
+      mode: 'ios',
+    });
+    await loading.present();
+
     this.libroService.getLibros(this.path).subscribe(res => {
       this.libros = res;
       this.librosLeidos = res.filter(lib => lib.leido);
@@ -41,6 +52,8 @@ export class HomePage implements OnInit {
       this.ordenarLibrosAlfabeticamente(this.librosLeidos);
       this.ordenarLibrosAlfabeticamente(this.librosPendientes);
     });
+
+    await loading.dismiss();
   }
 
   ngOnInit(): void {}
