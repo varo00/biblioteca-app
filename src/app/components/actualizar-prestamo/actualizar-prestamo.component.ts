@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
+import { format } from 'date-fns';
 import { Libro } from 'src/app/interfaces/libro';
 import { Prestamo } from 'src/app/interfaces/prestamo';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,29 +13,33 @@ import { PrestamoService } from 'src/app/services/prestamo.service';
   templateUrl: './actualizar-prestamo.component.html',
   styleUrls: ['./actualizar-prestamo.component.scss'],
 })
-export class ActualizarPrestamoComponent  implements OnInit {
-  @Input() 
-  prestamo : Prestamo;
+export class ActualizarPrestamoComponent implements OnInit {
+  @Input()
+  prestamo: Prestamo;
 
-  libros : Libro[];
+  libros: Libro[];
 
   actualizarForm: FormGroup;
 
   mostrar = false;
 
+  hoy;
+
   constructor(
-    private authSvc : AuthService,
-    private prestamoSvc : PrestamoService,
-    private libroSvc : LibrosService,
-    private loadingCtrl : LoadingController,
-    private modalCtrl : ModalController,
-    private fb : FormBuilder,
+    private authSvc: AuthService,
+    private prestamoSvc: PrestamoService,
+    private libroSvc: LibrosService,
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
+    private fb: FormBuilder,
   ) {
-    this.libroSvc.getLibros(`usuarios/${this.authSvc.currentUser.uid}/libros`).subscribe( res => {
+    this.libroSvc.getLibros(`usuarios/${this.authSvc.currentUser.uid}/libros`).subscribe(res => {
       this.libros = res.filter(lib => !lib.prestado);
     });
+
+    this.hoy = format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z';
   }
-  
+
   ngOnInit() {
     console.log(this.prestamo);
     this.actualizarForm = this.fb.group({
@@ -48,21 +53,21 @@ export class ActualizarPrestamoComponent  implements OnInit {
     console.log('calendario: ', cal);
   }
 
-  cerrarModal(){
+  cerrarModal() {
     this.modalCtrl.dismiss();
   }
 
-  cambioFecha(value){
+  cambioFecha(value) {
     this.actualizarForm.controls['fecha'].setValue(value);
   }
 
-  obtenerTitulo(){
-    this.libroSvc.getLibroById(this.actualizarForm.get('libro').value).subscribe( res => {
+  obtenerTitulo() {
+    this.libroSvc.getLibroById(this.actualizarForm.get('libro').value).subscribe(res => {
       this.actualizarForm.get('titulo').setValue(res.titulo);
     });
   }
 
-  async onSubmit(){
+  async onSubmit() {
     let pathPr = `usuarios/${this.authSvc.currentUser.uid}/prestamos/${this.prestamo.doc}`;
     let pathLib = `usuarios/${this.authSvc.currentUser.uid}/libros/`;
 
@@ -72,8 +77,8 @@ export class ActualizarPrestamoComponent  implements OnInit {
     });
     await loading.present();
 
-    this.libroSvc.updateLibro(pathLib+this.prestamo.libro, {prestado: false}).then(() => {
-      this.libroSvc.updateLibro(pathLib+this.actualizarForm.controls['libro'].value, {prestado: true}).then(() => {
+    this.libroSvc.updateLibro(pathLib + this.prestamo.libro, { prestado: false }).then(() => {
+      this.libroSvc.updateLibro(pathLib + this.actualizarForm.controls['libro'].value, { prestado: true }).then(() => {
         this.prestamoSvc.updatePrestamo(pathPr, this.actualizarForm.value).then(() => {
           console.log('prestamo actualizado');
           this.modalCtrl.dismiss();
@@ -85,7 +90,7 @@ export class ActualizarPrestamoComponent  implements OnInit {
 
   }
 
-  mostrarOcultarSelect(){
+  mostrarOcultarSelect() {
     this.mostrar = !this.mostrar;
   }
 

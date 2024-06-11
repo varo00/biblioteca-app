@@ -20,7 +20,8 @@
 
   <form [formGroup]="actualizarForm" (ngSubmit)="onSubmit()" class="ion-text-center ion-padding">
     <ion-datetime id="datetime" locale="es-ES" firstDayOfWeek="1" presentation="date" mode="ios" color="tertiary"
-      [value]="this.prestamo.fecha" #datetime showDefaultButtons="false" size="cover" (ionChange)="cambioFecha(datetime.value)">
+      [value]="this.prestamo.fecha" #datetime showDefaultButtons="false" size="cover"
+      (ionChange)="cambioFecha(datetime.value)" [max]="this.hoy">
       <span slot="title" class="ion-text-capitalize">Fecha del préstamo</span>
     </ion-datetime>
 
@@ -30,7 +31,8 @@
     </ion-item>
 
     <ion-item class="ion-margin-vertical" *ngIf="this.mostrar">
-      <ion-select interface="alert" [interfaceOptions]="{backdropDismiss:false}" mode="ios" placeholder="Elige Libro" formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false" (ionChange)="obtenerTitulo()">
+      <ion-select interface="alert" [interfaceOptions]="{backdropDismiss:false}" mode="ios" placeholder="Elige Libro"
+        formControlName="libro" [disabled]="this.libros?.length === 0 ? true : false" (ionChange)="obtenerTitulo()">
         <ion-select-option *ngFor="let l of libros" [value]="l.doc">{{l.titulo | uppercase}}</ion-select-option>
       </ion-select>
       <ion-icon name="close-outline" slot="end" (click)="mostrarOcultarSelect()"></ion-icon>
@@ -41,10 +43,12 @@
 
     <ion-item class="ion-margin-vertical">
       <ion-label position="floating">Prestado a</ion-label>
-      <ion-input type="text" autocapitalize="true" formControlName="prestado_a" [value]="this.prestamo.prestado_a"></ion-input>
+      <ion-input type="text" autocapitalize="true" formControlName="prestado_a"
+        [value]="this.prestamo.prestado_a"></ion-input>
     </ion-item>
 
-    <ion-button expand="full" fill="solid" shape="round" type="submit" class="ion-margin" [disabled]="actualizarForm.invalid">
+    <ion-button expand="full" fill="solid" shape="round" type="submit" class="ion-margin"
+      [disabled]="actualizarForm.invalid">
       Actualizar préstamo
     </ion-button>
   </form>

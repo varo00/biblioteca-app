@@ -16,14 +16,14 @@ import Swal from 'sweetalert2';
 export class VerPrestamosPendientesPage implements OnInit {
   @ViewChild(IonItemSliding) devolver !: IonItemSliding;
 
-  prestamos : Prestamo[];
+  prestamos: Prestamo[];
 
   constructor(
-    private prestamoSvc : PrestamoService,
-    private authSvc : AuthService,
-    private libroSvc : LibrosService,
-    private loadingCtrl : LoadingController,
-    private modalCtrl : ModalController
+    private prestamoSvc: PrestamoService,
+    private authSvc: AuthService,
+    private libroSvc: LibrosService,
+    private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController
   ) {
     this.prestamoSvc.getPrestamos(`usuarios/${this.authSvc.currentUser.uid}/prestamos`).subscribe(res => {
       this.prestamos = res;
@@ -33,7 +33,7 @@ export class VerPrestamosPendientesPage implements OnInit {
   ngOnInit() {
   }
 
-  async marcarDevuelto(p:Prestamo){
+  async marcarDevuelto(p: Prestamo) {
     await Swal.fire({
       title: '¿Marcar préstamo como devuelto?',
       icon: 'question',
@@ -44,17 +44,17 @@ export class VerPrestamosPendientesPage implements OnInit {
       backdrop: false,
     }).then((result) => {
       //marcar prestamo como devuelto
-      if(result.isConfirmed){
+      if (result.isConfirmed) {
         this.devolverPrestamo(p);
       }
     }).catch(err => {
       console.log(err);
-    }).finally(() => { 
+    }).finally(() => {
       this.devolver.closeOpened()
     });
   }
 
-  async devolverPrestamo(p:Prestamo){
+  async devolverPrestamo(p: Prestamo) {
     let hisPrest;
 
     const loading = await this.loadingCtrl.create({
@@ -63,10 +63,10 @@ export class VerPrestamosPendientesPage implements OnInit {
     });
     await loading.present();
 
-    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, {prestado:false}).then(() => {
-      hisPrest = {libro:p.titulo, prestado_a:p.prestado_a, devuelto:format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z'}
+    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, { prestado: false }).then(() => {
+      hisPrest = { libro: p.titulo, prestado_a: p.prestado_a, devuelto: format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z' }
 
-      this.prestamoSvc.devolverPrestamo(`usuarios/${this.authSvc.currentUser.uid}/historialPrestamos`,hisPrest).then(() => {
+      this.prestamoSvc.devolverPrestamo(`usuarios/${this.authSvc.currentUser.uid}/historialPrestamos`, hisPrest).then(() => {
         this.prestamoSvc.deletePrestamo(`usuarios/${this.authSvc.currentUser.uid}/prestamos/${p.doc}`);
       });
     }).finally(() => {
@@ -75,7 +75,7 @@ export class VerPrestamosPendientesPage implements OnInit {
 
   }
 
-  async eliminarPrestamo(p:Prestamo){
+  async eliminarPrestamo(p: Prestamo) {
     const exitoToast = Swal.mixin({
       toast: true,
       position: 'top',
@@ -91,7 +91,7 @@ export class VerPrestamosPendientesPage implements OnInit {
 
     await loading.present();
 
-    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, {prestado:false}).then(() => {
+    this.libroSvc.updateLibro(`usuarios/${this.authSvc.currentUser.uid}/libros/${p.libro}`, { prestado: false }).then(() => {
       this.prestamoSvc.deletePrestamo(`usuarios/${this.authSvc.currentUser.uid}/prestamos/${p.doc}`).then(() => {
 
         exitoToast.fire({
@@ -105,7 +105,7 @@ export class VerPrestamosPendientesPage implements OnInit {
 
   }
 
-  async confirmarEliminarPrestamo(p:Prestamo){
+  async confirmarEliminarPrestamo(p: Prestamo) {
     await Swal.fire({
       title: 'Quieres eliminar este préstamo?',
       icon: 'warning',
@@ -115,18 +115,18 @@ export class VerPrestamosPendientesPage implements OnInit {
       heightAuto: false,
       backdrop: false,
     }).then((result) => {
-      if(result.isConfirmed){
+      if (result.isConfirmed) {
         this.eliminarPrestamo(p);
-      }else{
+      } else {
         this.devolver.closeOpened();
       }
     });
   }
 
-  async abrirPrestamo(prestamo:Prestamo) {
+  async abrirPrestamo(prestamo: Prestamo) {
     const modal = await this.modalCtrl.create({
       component: ActualizarPrestamoComponent,
-      componentProps: { prestamo : prestamo },
+      componentProps: { prestamo: prestamo },
       breakpoints: [0, 0.5, 0.8, 1],
       initialBreakpoint: 0.8,
       backdropDismiss: true,
