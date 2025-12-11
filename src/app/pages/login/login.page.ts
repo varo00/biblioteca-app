@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
 
   async login() {
     this.auhService.login(this.loginForm.value).then(res => {
-      
+
       Swal.fire({
         icon: 'success',
         title: 'Login Correcto',

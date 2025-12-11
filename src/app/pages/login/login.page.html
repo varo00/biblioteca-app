@@ -11,7 +11,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-img src="../../../assets/images/libro.png" ></ion-img>
+  <ion-img src="../../../assets/images/libro.png"></ion-img>
 
 
   <form [formGroup]="loginForm" (ngSubmit)="login()" class="ion-padding">
@@ -20,20 +20,27 @@
       <ion-input required formControlName="email" type="text"></ion-input>
       <ion-icon slot="end" name="mail" class="ion-margin-top"></ion-icon>
     </ion-item>
-    <ion-note color="danger" class="ion-margin-start" *ngIf="((this.loginForm.get('email').dirty || this.loginForm.get('email').touched) && this.loginForm.get('email').errors)">Email inválido</ion-note>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="((this.loginForm.get('email').dirty || this.loginForm.get('email').touched) && this.loginForm.get('email').errors)">Email
+      inválido</ion-note>
 
     <ion-item class="ion-margin">
       <ion-label position="floating">Contraseña <ion-text color="danger">*</ion-text></ion-label>
-      <ion-input required formControlName="password" [type]="this.verContrasena ? 'text' : 'password'" id="pwd"></ion-input>
-      <ion-icon slot="end" [name]="this.verContrasena ? 'eye-off' : 'eye'" class="ion-margin-top" (click)="verPwd()"></ion-icon>
+      <ion-input required formControlName="password" [type]="this.verContrasena ? 'text' : 'password'"
+        id="pwd"></ion-input>
+      <ion-icon slot="end" [name]="this.verContrasena ? 'eye-off' : 'eye'" class="ion-margin-top"
+        (click)="verPwd()"></ion-icon>
     </ion-item>
-    <ion-note color="danger" class="ion-margin-start" *ngIf="((this.loginForm.get('password').dirty || this.loginForm.get('password').touched) && this.loginForm.get('password').errors)">La contraseña debe tener al menos 6 caracteres</ion-note>
+    <ion-note color="danger" class="ion-margin-start"
+      *ngIf="((this.loginForm.get('password').dirty || this.loginForm.get('password').touched) && this.loginForm.get('password').errors)">La
+      contraseña debe tener al menos 6 caracteres</ion-note>
 
     <div id="pwd-olvidada">
       <a class="ion-margin" [routerLink]="['/recuperar-pwd']">¿Contraseña olvidada?</a>
     </div>
 
-    <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid" class="ion-margin">
+    <ion-button expand="full" shape="round" color="primary" type="submit" [disabled]="loginForm.invalid"
+      class="ion-margin">
       iniciar sesión
     </ion-button>
   </form>

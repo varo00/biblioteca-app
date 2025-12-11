@@ -22,7 +22,7 @@ export class RegistroPage implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private menuCtrl: MenuController,
-    private loadingCtrl : LoadingController,
+    private loadingCtrl: LoadingController,
   ) { }
 
   ngOnInit() {
@@ -46,8 +46,8 @@ export class RegistroPage implements OnInit {
 
     this.authService.registro(this.signUpForm.get('email').value, this.signUpForm.get('password').value).then(async res => {
 
-      
-      if(this.signUpForm.get('imagen').value){
+
+      if (this.signUpForm.get('imagen').value) {
         let dataUrl = this.signUpForm.value['imagen'];
         let imagenPath = `${this.authService.currentUser.uid}/perfil`;
         let imagenUrl = await this.userService.subirFotoPerfil(imagenPath, dataUrl);
